@@ -36,8 +36,10 @@
             class="text-decoration-none black--text hover-text"
             :to="props.item.to"
           >
-            <v-icon>{{ props.item.icon }}</v-icon>
-            {{ props.item.name }}
+            <div>
+              <v-icon>{{ props.item.icon }}</v-icon>
+              {{ props.item.name }}
+            </div>
           </nuxt-link>
           <span v-else class="black--text"
             ><v-icon>{{ props.item.icon }}</v-icon
@@ -69,11 +71,11 @@ export default {
           children: [
             {
               name: '일본생활',
-              to: '/post/life',
+              to: '/life',
             },
             {
               name: '요리',
-              to: '/post/cooking',
+              to: '/cooking',
             },
           ],
         },
@@ -83,11 +85,11 @@ export default {
           children: [
             {
               name: 'Javascript',
-              to: '/post/javascript',
+              to: '/javascript',
             },
             {
               name: 'VueJs',
-              to: '/post/vuejs',
+              to: '/vuejs',
             },
           ],
         },
