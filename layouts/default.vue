@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <AppBarTop/>
-    <AppBarLeft/>
+    <AppBar />
     <v-main>
       <v-container>
         <Nuxt />
@@ -11,15 +10,12 @@
 </template>
 
 <script>
-import AppBarLeft from '~/components/AppBarLeft.vue'
-import AppBarTop from '~/components/AppBarTop.vue'
+import AppBar from '~/components/AppBar.vue'
 export default {
   name: 'DefaultLayout',
-  components: { AppBarLeft, AppBarTop },
+  components: { AppBar },
   data() {
-    return {
-      
-    }
+    return {}
   },
 }
 </script>

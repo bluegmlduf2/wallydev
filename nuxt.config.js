@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+const isProduction = process.env.NODE_ENV === 'production'
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
@@ -7,6 +8,9 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'WALLY DEV',
+    htmlAttrs: {
+      lang: 'ko',
+    },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -17,7 +21,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ['@/assets/css/reset.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [],
@@ -41,11 +45,6 @@ export default {
     '@nuxtjs/pwa',
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
-  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
@@ -60,6 +59,7 @@ export default {
     theme: {
       themes: {
         light: {
+          maincolor: '#41b883',
           primary: colors.blue.darken2,
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
@@ -72,6 +72,11 @@ export default {
     },
   },
 
+  env: {
+    baseURL: isProduction
+      ? 'https://'
+      : 'http://localhost:3001',
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
 }

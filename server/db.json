@@ -1,0 +1,96 @@
+{
+  "post": [
+    {
+      "id": 1,
+      "title": "테스트글제목1",
+      "content": "1테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 2,
+      "title": "테스트글제목2",
+      "content": "2테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 3,
+      "title": "테스트글제목3",
+      "content": "3테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 4,
+      "title": "테스트글제목4",
+      "content": "4테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 5,
+      "title": "테스트글제목5",
+      "content": "5테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 6,
+      "title": "테스트글제목6",
+      "content": "6테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 7,
+      "title": "테스트글제목7",
+      "content": "7테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 8,
+      "title": "테스트글제목8",
+      "content": "8테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 9,
+      "title": "테스트글제목9",
+      "content": "9테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 10,
+      "title": "테스트글제목10",
+      "content": "10테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 11,
+      "title": "테스트글제목11",
+      "content": "11테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 12,
+      "title": "테스트글제목12",
+      "content": "12테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "cooking"
+    },
+    {
+      "id": 13,
+      "title": "테스트글제목13",
+      "content": "13테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용테스크글내용",
+      "imageUrl": "http://placeimg.com/640/480/tech",
+      "category": "javascript"
+    }
+  ],
+  "comments": [{ "id": 1, "body": "some comment", "postId": 1 }]
+}
