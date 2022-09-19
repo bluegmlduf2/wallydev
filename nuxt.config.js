@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors'
-const isProduction = process.env.NODE_ENV === 'production'
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
@@ -24,7 +23,7 @@ export default {
   css: ['@/assets/css/reset.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: ['@/plugins/axios'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -43,13 +42,43 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    '@nuxtjs/dotenv',
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: process.env.VUE_APP_APIKEY,
+          authDomain: process.env.VUE_APP_AUTHDOMAIN,
+          projectId: process.env.VUE_APP_PROJECTID,
+          storageBucket: process.env.VUE_APP_STORAGEBUCKET,
+          messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
+          appId: process.env.VUE_APP_APPID,
+          measurementId: process.env.VUE_APP_MEASUREMENTID,
+        },
+        services: {
+          auth: {
+            persistence: 'local',
+            initialize: {
+              onAuthStateChangedAction: 'onAuthStateChanged',
+            },
+            ssr: true,
+          },
+        },
+      },
+    ],
   ],
-
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
       lang: 'en',
+    },
+    meta: false,
+    icon: false,
+
+    workbox: {
+      importScripts: ['/firebase-auth-sw.js'],
+      dev: process.env.NODE_ENV === 'development',
     },
   },
 
@@ -72,10 +101,8 @@ export default {
     },
   },
 
-  env: {
-    baseURL: isProduction
-      ? 'https://'
-      : 'http://localhost:3001',
+  axios: {
+    baseURL: process.env.VUE_APP_API_URL,
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},

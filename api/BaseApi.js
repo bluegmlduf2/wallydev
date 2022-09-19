@@ -1,5 +1,4 @@
-import axios from '~/plugins/axios'
-
+import Vue from 'vue';
 class BaseApi {
   /**
    * The constructor of the BaseApi.
@@ -81,7 +80,7 @@ class BaseApi {
    */
   submit(requestType, url, data = null) {
     return new Promise((resolve, reject) => {
-      axios[requestType](url + this.getParameterString(), data)
+      Vue.$http[requestType](url + this.getParameterString(), data)
         .then((response) => {
           resolve(response.data)
         })
@@ -149,7 +148,7 @@ class BaseApi {
    */
   uploadTempImage(item, isUserImgUpload = false) {
     // Post요청의 Content-Type 을 multipart/form-data(이미지 문자를 인코딩하지 않음)으로 설정하고 보낼수있음
-    axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
+    Vue.$http.defaults.headers.post['Content-Type'] = 'multipart/form-data'
     // userImgUrl가 참이면 하면 유저이미지 업로드, 존재하지않으면 게시물 업로드용
     const url = isUserImgUpload
       ? `/${this.endpoint}/userimage`

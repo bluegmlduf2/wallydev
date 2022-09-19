@@ -1,32 +1,48 @@
-import axios from 'axios'
+// import { cookieAuthKey, cookieRefreshAuthKey } from '~/store/auth'
+import Vue from "vue";
 
-const instance = axios.create({
-  baseURL: process.env.baseURL,
-})
-instance.defaults.headers.common.Accept = 'application/json'
+export default function ({ $axios, store }) {  
+  $axios.onRequest((config) => {
+    // const token = localStorage.getItem(cookieAuthKey) || ''
+    // if (token) {
+    //   config.headers.Authorization = token
+    // }
+    // return config
+  })
 
-instance.interceptors.request.use(
-  function (config) {
-    // Do something before request is sent
-    return config
-  },
-  function (error) {
-    // Do something with request error
-    return Promise.reject(error)
-  }
-)
+  // $axios.onResponseError(async (err) => {
+  //   const originalConfig = err.config
+  //   if (
+  //     originalConfig.url !== `${process.env.API_URL}/use/login` &&
+  //     err.response
+  //   ) {
+  //     // Access Token was expired
+  //     if (err.response.status === 401 && !originalConfig._retry) {
+  //       originalConfig._retry = true
+  //       try {
+  //         const response = await $axios.post(
+  //           `${process.env.API_URL}/refresh-token`,
+  //           {
+  //             refreshToken: localStorage.getItem(cookieRefreshAuthKey) || ''
+  //           }
+  //         )
+  //         const { data } = response.data
 
-instance.interceptors.response.use(
-  function (response) {
-    // Any status code that lie within the range of 2xx cause this function to trigger
-    // Do something with response data
-    return response
-  },
-  function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error)
-  }
-)
+  //         originalConfig.headers.Authorization = data.auth_key
 
-export default instance
+  //         store.commit('auth/loginSuccess', {
+  //           authKey: data.auth_key,
+  //           refreshAuthKey: data.refresh_auth_key
+  //         })
+
+  //         return Promise.resolve($axios(originalConfig))
+  //       } catch (error) {
+  //         return Promise.reject(error)
+  // })
+  //       }
+  //     }
+  //   }
+  //   return Promise.reject(err)
+  
+  Vue.$http = $axios;
+}

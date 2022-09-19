@@ -2,7 +2,7 @@
   <div>
     <v-app-bar :clipped-left="true" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title class="d-none d-sm-block" v-text="title" />
       <v-spacer />
       <div max-width="100">
         <v-text-field
@@ -14,11 +14,21 @@
           rounded
         ></v-text-field>
       </div>
-      <v-btn icon>
+      <v-btn icon href="https://github.com/bluegmlduf2">
         <v-icon>mdi-github</v-icon>
       </v-btn>
-      <v-btn icon>
+      <v-btn
+        v-if="isLoggedIn && isAdminIn"
+        icon
+        @click="$router.push('/write')"
+      >
+        <v-icon>mdi-pencil</v-icon>
+      </v-btn>
+      <v-btn v-if="!isLoggedIn" icon @click="signInWithGoogle">
         <v-icon>mdi-login</v-icon>
+      </v-btn>
+      <v-btn v-else icon @click="logout">
+        <v-icon>mdi-logout</v-icon>
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" clipped fixed app>
@@ -95,6 +105,31 @@ export default {
         },
       ],
     }
+  },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters?.isLoggedIn
+    },
+    isAdminIn() {
+      return this.$store.getters?.isAdminIn
+    },
+  },
+  methods: {
+    async signInWithGoogle() {
+      const provider = new this.$fireModule.default.auth.GoogleAuthProvider()
+      await this.$fire.auth.signInWithPopup(provider).then((res) => {
+        res.user.getIdToken(true).then((idToken) => {
+          localStorage.setItem('access_token', idToken.toString())
+          localStorage.setItem(
+            'refresh_token',
+            res.user.refreshToken.toString()
+          )
+        })
+      })
+    },
+    async logout() {
+      await this.$fire.auth.signOut()
+    },
   },
 }
 </script>
