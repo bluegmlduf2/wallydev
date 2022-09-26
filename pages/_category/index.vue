@@ -9,7 +9,9 @@
         >
           <v-img :src="e.imageUrl" height="200px"></v-img>
           <v-card-title> {{ e.title }} </v-card-title>
-          <v-card-subtitle> {{ e.content }} </v-card-subtitle>
+          <v-card-subtitle class="subtitle-body text-overflow">
+            {{ e.content }}
+          </v-card-subtitle>
           <v-card-actions class="d-flex justify-end">
             <v-btn color="maincolor" text> 더보기 </v-btn>
           </v-card-actions>
@@ -50,5 +52,9 @@ export default {
 .hover-up:hover {
   transform: translateY(-8px);
   transition: transform 0.25s ease-in 0s;
+}
+.subtitle-body {
+  max-height: 70px;
+  min-height: 70px;
 }
 </style>

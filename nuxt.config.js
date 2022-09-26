@@ -20,7 +20,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['@/assets/css/reset.css'],
+  css: ['@/assets/css/reset.css','@/assets/css/common.css','@toast-ui/editor/dist/toastui-editor.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['@/plugins/axios'],
