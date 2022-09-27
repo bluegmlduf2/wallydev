@@ -6,3 +6,11 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
+/* 글쓰기시 P태그 글간격이 너무 넓기때문에 추가 */
+p {
+  margin-bottom: 0 !important;
+}
+/* 글쓰기시 아웃라인제거 */
+.ProseMirror:focus {
+  outline: none;
+}

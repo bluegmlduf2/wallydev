@@ -15,7 +15,9 @@
       >
     </v-row>
     <v-row no-gutters>
-      <Viewer id="toastUiEditor" :initial-value="post.content" height="400px" />
+      <pre>
+        {{ post.content }}
+      </pre>
     </v-row>
     <v-row no-gutters class="mt-3">
       <v-textarea
@@ -57,14 +59,9 @@
 </template>
 
 <script>
-import '@toast-ui/editor/dist/toastui-editor-viewer.css'
-import { Viewer } from '@toast-ui/vue-editor'
 
 export default {
   name: 'IndexPostDetail',
-  components: {
-    Viewer,
-  },
   async asyncData({ params, store }) {
     const postId = params.postId
     await store.dispatch('getPostDetail', postId)
