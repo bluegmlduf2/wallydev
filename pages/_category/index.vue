@@ -2,18 +2,16 @@
   <v-container>
     <v-row class="mb-6" justify="start">
       <v-col v-for="e in post" :key="e.id">
-        <v-card
-          max-width="344"
-          class="hover-up"
-          @click="moveToPostDetail(e.id)"
-        >
+        <v-card max-width="344" class="hover-up">
           <v-img :src="e.imageUrl" height="200px"></v-img>
           <v-card-title> {{ e.title }} </v-card-title>
           <v-card-subtitle class="subtitle-body text-overflow">
             {{ e.content }}
           </v-card-subtitle>
           <v-card-actions class="d-flex justify-end">
-            <v-btn color="maincolor" text> 더보기 </v-btn>
+            <v-btn color="maincolor" text nuxt :to="`${category}/${e.id}`">
+              더보기
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -38,11 +36,6 @@ export default {
   computed: {
     post() {
       return this.$store.getters.post
-    },
-  },
-  methods: {
-    moveToPostDetail(postId) {
-      this.$router.push(`/${this.category}/${postId}`)
     },
   },
 }

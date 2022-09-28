@@ -14,10 +14,8 @@
         >삭제</v-btn
       >
     </v-row>
-    <v-row no-gutters>
-      <pre>
-        {{ post.content }}
-      </pre>
+    <v-row no-gutters class="my-5">
+      <tiptap-viewer :content="post.content" />
     </v-row>
     <v-row no-gutters class="mt-3">
       <v-textarea
@@ -59,9 +57,13 @@
 </template>
 
 <script>
+import TiptapViewer from '~/components/TiptapViewer.vue'
 
 export default {
   name: 'IndexPostDetail',
+  components: {
+    TiptapViewer,
+  },
   async asyncData({ params, store }) {
     const postId = params.postId
     await store.dispatch('getPostDetail', postId)

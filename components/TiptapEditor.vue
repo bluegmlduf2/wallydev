@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="editor">
+    <div v-if="editor" class="editor-menu">
       <button
         :disabled="!editor.can().chain().focus().toggleBold().run()"
         :class="{ 'is-active': editor.isActive('bold') }"
@@ -104,19 +104,26 @@
       >
         redo
       </button>
+      <button @click="addImage">image</button>
     </div>
     <editor-content class="content" :editor="editor" />
+    <div class="d-flex justify-end mt-3">
+      <v-btn class="text-subtitle-1" @click="onClickWrite">작성</v-btn>
+    </div>
   </div>
 </template>
 
 <script>
 import { Editor, EditorContent } from '@tiptap/vue-2'
-import StarterKit from '@tiptap/starter-kit'
+import { StarterKit } from '@tiptap/starter-kit'
+import { Image } from '@tiptap/extension-image'
 
 export default {
   components: {
     EditorContent,
   },
+
+  middleware: ['auth', 'check-admin'],
 
   data() {
     return {
@@ -126,18 +133,38 @@ export default {
 
   mounted() {
     this.editor = new Editor({
-      content: "",
-      extensions: [StarterKit],
+      content: '',
+      extensions: [
+        StarterKit,
+        Image.configure({
+          inline: true, // p태그안에 img태그를 렌더링한다
+          allowBase64: true,
+        }),
+      ],
     })
   },
 
   beforeDestroy() {
     this.editor.destroy()
   },
+
+  methods: {
+    onClickWrite() {
+      const writtenHtml = this.editor.getHTML()
+      console.log(writtenHtml)
+    },
+    addImage() {
+      const url = window.prompt('URL')
+
+      if (url) {
+        this.editor.chain().focus().setImage({ src: url }).run()
+      }
+    },
+  },
 }
 </script>
 <style scoped>
-button {
+.editor-menu button {
   padding: 0.25rem;
   margin: 0.1rem;
   border: 1px solid black;
@@ -147,7 +174,7 @@ button {
 .content {
   border: 1px solid black;
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: 1rem;
   min-height: 500px;
   margin-top: 0.5rem;
 }
