@@ -65,14 +65,14 @@ export const actions = {
       return
     }
 
-    if (authUser && claims) {
-      try {
-        // ログインしたらページ遷移します
-        await this.$router.push('/')
-      } catch (e) {
-        console.error(e)
-      }
-    }
+    // if (authUser && claims) {
+    //   try {
+    //     // ログインしたらページ遷移します
+    //     await this.$router.push('/')
+    //   } catch (e) {
+    //     console.error(e)
+    //   }
+    // }
 
     commit('SET_USER', { authUser, claims })
   },

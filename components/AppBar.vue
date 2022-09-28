@@ -117,15 +117,18 @@ export default {
   methods: {
     async signInWithGoogle() {
       const provider = new this.$fireModule.default.auth.GoogleAuthProvider()
-      await this.$fire.auth.signInWithPopup(provider).then((res) => {
-        res.user.getIdToken(true).then((idToken) => {
-          localStorage.setItem('access_token', idToken.toString())
-          localStorage.setItem(
-            'refresh_token',
-            res.user.refreshToken.toString()
-          )
+      await this.$fire.auth
+        .signInWithPopup(provider)
+        .then((res) => {
+          res.user.getIdToken(true).then((idToken) => {
+            localStorage.setItem('access_token', idToken.toString())
+            localStorage.setItem(
+              'refresh_token',
+              res.user.refreshToken.toString()
+            )
+          })
         })
-      })
+        .catch((e) => {})
     },
     async logout() {
       await this.$fire.auth.signOut()
