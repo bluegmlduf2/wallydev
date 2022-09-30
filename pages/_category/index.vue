@@ -17,7 +17,7 @@
       </v-col>
     </v-row>
     <br />
-    <InfiniteLoading v-if="post.length" @infinite="scrolling"></InfiniteLoading>
+    <InfiniteLoading @infinite="scrolling"></InfiniteLoading>
   </v-container>
 </template>
 
