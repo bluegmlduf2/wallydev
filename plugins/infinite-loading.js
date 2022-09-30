@@ -5,6 +5,9 @@ Vue.component('InfiniteLoading', InfiniteLoading)
 
 // vue-infinite-loading custom
 Vue.use(InfiniteLoading, {
-  slots: { noMore: '데이터가 없습니다' },
+  slots: {
+    noMore: '더이상 데이터가 없습니다',
+    noResults: '데이터가 없습니다',
+  },
   props: { spinner: 'waveDots' },
 })
