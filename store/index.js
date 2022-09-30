@@ -6,8 +6,11 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setPost: (state, payload) => {
+  SET_POST: (state, payload) => {
     state.post = payload
+  },
+  ADD_POST: (state, payload) => {
+    state.post = [...state.post, ...payload]
   },
   // stateを空にします
   RESET_STORE(state) {
@@ -82,8 +85,15 @@ export const actions = {
     return await new PostApi()
       .getPosts(payload)
       .then((response) => {
-        // 서버에서 가져온 게시물을 초기화
-        commit('setPost', response)
+        // 최초 게시물을 초기화시
+        if (payload.page === 1) {
+          commit('SET_POST', response)
+        } else if (payload.page > 1) {
+          // 스크롤에 의해 게시물 더보기시
+          commit('ADD_POST', response)
+        }
+        // 남은 게시글수 반환
+        return response?.length || 0
       })
       .catch((e) => {
         console.warn(e)

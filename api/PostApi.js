@@ -1,5 +1,4 @@
-
-import BaseApi from './BaseApi';
+import BaseApi from './BaseApi'
 
 class PostApi extends BaseApi {
   /**
@@ -9,14 +8,16 @@ class PostApi extends BaseApi {
    */
   constructor(parameters = {}) {
     // BaseApi.js의 부모의 constructor를 실행, 부모의 endpoint는 reclist사용
-    super('post', parameters);
+    super('post', parameters)
   }
 
   /**
    * 게시물 가져오기
    */
-  getPosts() {
-    return this.all();
+  getPosts({ category, page }) {
+    // 게시물을 12개씩 가져온다
+    this.setParameters({ category, _page: page, _limit: '12' })
+    return this.all()
   }
 
   /**
@@ -27,7 +28,7 @@ class PostApi extends BaseApi {
    * @returns {Promise} The result in a promise.
    */
   getPostDetail(postId) {
-    return this.find(postId);
+    return this.find(postId)
   }
 
   /**
@@ -38,7 +39,7 @@ class PostApi extends BaseApi {
    * @returns {Promise} The result in a promise.
    */
   updatePostCalendar(param) {
-    return this.submit('put', `${this.endpoint}/update/post-date`, param);
+    return this.submit('put', `${this.endpoint}/update/post-date`, param)
   }
 
   /**
@@ -47,7 +48,7 @@ class PostApi extends BaseApi {
    * @returns {Promise} The result in a promise.
    */
   createPost(param) {
-    return this.create(param);
+    return this.create(param)
   }
 
   /**
@@ -56,8 +57,8 @@ class PostApi extends BaseApi {
    * @returns {Promise} The result in a promise.
    */
   updatePost(param) {
-    return this.update(null, param);
+    return this.update(null, param)
   }
 }
 
-export default PostApi;
+export default PostApi

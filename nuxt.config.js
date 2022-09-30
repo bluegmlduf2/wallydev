@@ -23,7 +23,10 @@ export default {
   css: ['@/assets/css/common.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['@/plugins/axios'],
+  plugins: [
+    '@/plugins/axios',
+    { src: '~/plugins/infinite-loading', ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
