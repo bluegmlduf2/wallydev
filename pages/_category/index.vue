@@ -6,7 +6,7 @@
           <v-img :src="e.imageUrl" height="200px"></v-img>
           <v-card-title> {{ e.title }} </v-card-title>
           <v-card-subtitle class="subtitle-body text-overflow">
-            {{ e.content }}
+            {{ e.postContent }}
           </v-card-subtitle>
           <v-card-actions class="d-flex justify-end">
             <v-btn color="maincolor" text nuxt :to="`${category}/${e.id}`">

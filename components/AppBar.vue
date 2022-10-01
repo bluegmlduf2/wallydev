@@ -77,15 +77,15 @@ export default {
         },
         {
           icon: 'mdi-human-greeting-variant',
-          name: 'Life',
+          name: 'LifeStyle',
           children: [
             {
-              name: '일본생활',
-              to: '/life',
+              name: 'Today',
+              to: '/today',
             },
             {
-              name: '요리',
-              to: '/cooking',
+              name: 'Food',
+              to: '/food',
             },
           ],
         },

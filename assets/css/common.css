@@ -7,8 +7,8 @@
   -webkit-line-clamp: 3;
 }
 /* 글쓰기시 P태그 글간격이 너무 넓기때문에 추가 */
-p {
-  margin: 0.25rem 0 !important;
+.ProseMirror p {
+  margin: 0 !important;
 }
 /* 글쓰기시 아웃라인제거 */
 .ProseMirror:focus {
@@ -18,4 +18,8 @@ p {
 img {
   max-width: 100%;
   height: auto;
+}
+/* 댓글입력란 */
+.comment-content textarea{
+  color: rgba(0, 0, 0, 0.6) !important;
 }

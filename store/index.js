@@ -12,6 +12,12 @@ export const mutations = {
   ADD_POST: (state, payload) => {
     state.post = [...state.post, ...payload]
   },
+  SET_COMMENT_OPEN: (state, payload) => {
+    // 댓글을 수정상태로 변경
+    state.post.comment = state.post.comment.map((e) =>
+      e.id === payload.id ? { ...e, isUpdate: payload.isUpdate } : e
+    )
+  },
   // stateを空にします
   RESET_STORE(state) {
     state.authUser = null
@@ -106,7 +112,7 @@ export const actions = {
       .getPostDetail(payload)
       .then((response) => {
         // 서버에서 가져온 게시물을 초기화
-        commit('setPost', response)
+        commit('SET_POST', response)
       })
       .catch((e) => {
         console.warn(e)
