@@ -117,7 +117,7 @@
     />
     <editor-content class="content" :editor="editor" spellcheck="false" />
     <div class="d-flex mt-3">
-      <v-btn class="text-subtitle-1" @click="$router.go(-1)">돌아가기</v-btn>
+      <v-btn class="text-subtitle-1" @click="$router.go(-1)">뒤로</v-btn>
       <v-spacer />
       <v-btn class="text-subtitle-1" @click="onClickWrite">작성</v-btn>
     </div>

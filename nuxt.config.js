@@ -110,4 +110,8 @@ export default {
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+  server: {
+    // 모바일기기(로컬) 테스트를 위하여 추가
+    host: '0', // default: localhost
+  },
 }

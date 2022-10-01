@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-10">
+  <v-container class="pa-md-10 pa-lg-10">
     <v-row no-gutters>
       <span class="text-h3 font-weight-bold">{{ post.title }}</span>
     </v-row>
