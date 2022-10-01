@@ -10,10 +10,18 @@
       >
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn && isAdminIn">
-        <v-btn class="text-subtitle-1 font-weight-light px-0" text small
+        <v-btn
+          class="text-subtitle-1 font-weight-light px-0"
+          text
+          small
+          @click="updatePost(post)"
           >수정</v-btn
         >
-        <v-btn class="text-subtitle-1 font-weight-light px-0" text small
+        <v-btn
+          class="text-subtitle-1 font-weight-light px-0"
+          text
+          small
+          @click="deletePost(post)"
           >삭제</v-btn
         >
       </div>
@@ -131,6 +139,11 @@ export default {
       this.isOpen = true
       this.dialogMessage = '성공메세지야 떠라'
     },
+    updatePost(post) {
+      this.$router.push({ name: 'write', params: { post }, props: true })
+    },
+    deletePost(post) {
+      alert(3)
     },
     updateComment(comment) {
       this.changeCommentOpen(comment, true)

@@ -106,8 +106,19 @@
       </button>
       <button @click="addImage">image</button>
     </div>
-    <editor-content class="content" :editor="editor" />
-    <div class="d-flex justify-end mt-3">
+    <v-text-field
+      clear-icon="title"
+      class="mt-2 title"
+      dense
+      solo
+      hide-details
+      :value="title"
+      placeholder="제목을 입력해주세요"
+    />
+    <editor-content class="content" :editor="editor" spellcheck="false" />
+    <div class="d-flex mt-3">
+      <v-btn class="text-subtitle-1" @click="$router.go(-1)">돌아가기</v-btn>
+      <v-spacer />
       <v-btn class="text-subtitle-1" @click="onClickWrite">작성</v-btn>
     </div>
   </div>
@@ -124,16 +135,17 @@ export default {
   },
 
   middleware: ['auth', 'check-admin'],
-
   data() {
     return {
+      title: this.$route.params?.post ? this.$route.params.post.title : '',
       editor: null,
     }
   },
-
   mounted() {
     this.editor = new Editor({
-      content: '',
+      content: this.$route.params?.post
+        ? this.$route.params.post.postContent
+        : '',
       extensions: [
         StarterKit,
         Image.configure({
@@ -168,6 +180,11 @@ export default {
   padding: 0.25rem;
   margin: 0.1rem;
   border: 1px solid black;
+  border-radius: 0.5rem;
+}
+
+.title {
+  border: 1px solid black !important;
   border-radius: 0.5rem;
 }
 
