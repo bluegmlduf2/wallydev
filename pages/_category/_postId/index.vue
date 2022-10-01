@@ -89,6 +89,11 @@
         </v-card-actions>
       </v-card>
     </v-row>
+    <Alert
+      :is-open="isOpen"
+      :dialog-message="dialogMessage"
+      @closeDialog="isOpen = false"
+    />
   </v-container>
 </template>
 
@@ -104,6 +109,12 @@ export default {
     const postId = params.postId
     await store.dispatch('getPostDetail', postId)
   },
+  data() {
+    return {
+      isOpen: false,
+      dialogMessage: '',
+    }
+  },
   computed: {
     post() {
       return this.$store.getters.post
@@ -117,7 +128,9 @@ export default {
   },
   methods: {
     writeComment() {
-      alert(1)
+      this.isOpen = true
+      this.dialogMessage = '성공메세지야 떠라'
+    },
     },
     updateComment(comment) {
       this.changeCommentOpen(comment, true)
