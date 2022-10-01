@@ -111,7 +111,8 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
   server: {
-    // 모바일기기(로컬) 테스트를 위하여 추가
-    host: '0', // default: localhost
+    // 모바일기기(로컬) 테스트를 위하여 추가하여 사용하기도 하지만 배포환경에서 문제가 될 가능성이 있어 npm명령어에 입력하여사용
+    // host: '192.168.0.101', // default: localhost
+    // port: '3000', // default: 3000
   },
 }
