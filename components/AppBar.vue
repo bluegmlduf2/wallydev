@@ -20,13 +20,11 @@
       <v-btn icon href="https://github.com/bluegmlduf2">
         <v-icon>mdi-github</v-icon>
       </v-btn>
-      <v-btn
-        v-if="isLoggedIn && isAdminIn"
-        icon
-        @click="$router.push('/write')"
-      >
-        <v-icon>mdi-pencil</v-icon>
-      </v-btn>
+      <client-only>
+        <v-btn v-if="isLoggedIn && isAdminIn" icon nuxt to="/write">
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+      </client-only>
       <v-btn v-if="!isLoggedIn" icon @click="signInWithGoogle">
         <v-icon>mdi-login</v-icon>
       </v-btn>
