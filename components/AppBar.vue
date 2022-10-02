@@ -6,12 +6,15 @@
       <v-spacer />
       <div max-width="100">
         <v-text-field
+          v-model="searchText"
           prepend-icon="mdi-magnify"
           single-line
           hide-details
           outlined
           dense
           rounded
+          @click:prepend="searchPost"
+          @keyup.enter="searchPost"
         ></v-text-field>
       </div>
       <v-btn icon href="https://github.com/bluegmlduf2">
@@ -69,6 +72,7 @@ export default {
       title: 'WALLY DEV',
       drawer: false,
       tree: [],
+      searchText: '',
       items: [
         {
           icon: 'mdi-home',
@@ -132,6 +136,12 @@ export default {
     },
     async logout() {
       await this.$fire.auth.signOut()
+    },
+    searchPost() {
+      this.$router.push({
+        name: 'search',
+        query: { searchText: this.searchText },
+      })
     },
   },
 }

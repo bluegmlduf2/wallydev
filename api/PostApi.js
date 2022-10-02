@@ -14,9 +14,18 @@ class PostApi extends BaseApi {
   /**
    * 게시물 가져오기
    */
-  getPosts({ category, page }) {
+  getPosts({ searchText, category, page }) {
+    const params = { _page: page, _limit: '12' }
+
+    // 검색어조건이 있는 경우와 없는 경우
+    if (searchText) {
+      params.q = searchText
+    } else {
+      params.category = category
+    }
+
     // 게시물을 12개씩 가져온다
-    this.setParameters({ category, _page: page, _limit: '12' })
+    this.setParameters(params)
     return this.all()
   }
 

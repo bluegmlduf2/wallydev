@@ -140,7 +140,7 @@ export default {
       this.dialogMessage = '성공메세지야 떠라'
     },
     updatePost(post) {
-      this.$router.push({ name: 'write', params: { post }, props: true })
+      this.$router.push({ name: 'write', params: { post } })
     },
     deletePost(post) {
       alert(3)
