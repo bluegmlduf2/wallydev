@@ -107,6 +107,7 @@
 
 <script>
 import TiptapViewer from '~/components/TiptapViewer.vue'
+import message from '~/assets/js/message'
 
 export default {
   name: 'IndexPostDetail',
@@ -137,7 +138,7 @@ export default {
   methods: {
     writeComment() {
       this.isOpen = true
-      this.dialogMessage = '성공메세지야 떠라'
+      this.dialogMessage = message.registerComment
     },
     updatePost(post) {
       this.$router.push({ name: 'write', params: { post } })

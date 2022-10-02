@@ -30,10 +30,6 @@ export default {
       page: 1,
     }
   },
-  fetch() {
-    // watch에서 getPostsBySearchText메소드를 같이 사용하므로 분리함
-    this.getPostsBySearchText()
-  },
   computed: {
     post() {
       return this.$store.getters.post
@@ -44,6 +40,11 @@ export default {
     // 같은 경로의 router로 push하는 경우 화면이 동작하지않는다.
     // 그래서 router로 push될시 query 값인 searchText를 감시하여 동작이 있으면 getPostsBySearchText를 호출
     '$route.query.searchText': 'getPostsBySearchText',
+  },
+  // 새로고침시 fetch가 동작하지 않아서 mounted로 변경
+  mounted() {
+    // watch에서 getPostsBySearchText메소드를 같이 사용하므로 분리함
+    this.getPostsBySearchText()
   },
   methods: {
     async getPostsBySearchText() {

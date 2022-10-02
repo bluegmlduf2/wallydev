@@ -22,6 +22,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    // success,info,warning,error의 4가지 타입이 있다
     dialogType: {
       type: String,
       default: 'info',
@@ -39,6 +40,12 @@ export default {
   watch: {
     // data에 직접 isOpen을 할당하면 변경을 인식하지 못하여 watch를 사용
     isOpen() {
+      // 에러메세지가 아닌 경우 1.5초뒤에 메세지가 닫힌다
+      if (this.dialogType!=='error') {
+        setTimeout(() => {
+          this.$emit('closeDialog')
+        }, 1500);
+      }
       this.dialog = this.isOpen
     },
   },

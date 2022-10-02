@@ -17,7 +17,7 @@
           @keyup.enter="searchPost"
         ></v-text-field>
       </div>
-      <v-btn icon href="https://github.com/bluegmlduf2">
+      <v-btn icon href="https://github.com/bluegmlduf2" target="_blank">
         <v-icon>mdi-github</v-icon>
       </v-btn>
       <client-only>
@@ -47,7 +47,7 @@
             class="text-decoration-none black--text hover-text"
             :to="props.item.to"
           >
-            <div>
+            <div @click="searchText = ''">
               <v-icon>{{ props.item.icon }}</v-icon>
               {{ props.item.name }}
             </div>
@@ -59,10 +59,17 @@
         </template>
       </v-treeview>
     </v-navigation-drawer>
+    <Alert
+      :is-open="isOpen"
+      :dialog-message="dialogMessage"
+      @closeDialog="isOpen = false"
+    />
   </div>
 </template>
 
 <script>
+import message from '~/assets/js/message'
+
 export default {
   name: 'AppBarLeft',
   data() {
@@ -71,6 +78,8 @@ export default {
       drawer: false,
       tree: [],
       searchText: '',
+      isOpen: false,
+      dialogMessage: '',
       items: [
         {
           icon: 'mdi-home',
@@ -129,17 +138,27 @@ export default {
               res.user.refreshToken.toString()
             )
           })
+          this.isOpen = true
+          this.dialogMessage = message.welcome
         })
         .catch((e) => {})
     },
     async logout() {
       await this.$fire.auth.signOut()
+      this.isOpen = true
+      this.dialogMessage = message.bye
     },
     searchPost() {
-      this.$router.push({
-        name: 'search',
-        query: { searchText: this.searchText },
-      })
+      // 검색어 입력확인
+      if (this.searchText) {
+        this.$router.push({
+          name: 'search',
+          query: { searchText: this.searchText },
+        })
+      } else {
+        this.isOpen = true
+        this.dialogMessage = message.inputText('검색어')
+      }
     },
   },
 }
