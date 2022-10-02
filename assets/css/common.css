@@ -20,6 +20,10 @@ img {
   height: auto;
 }
 /* 댓글입력란 */
-.comment-content textarea{
+.comment-content textarea {
   color: rgba(0, 0, 0, 0.6) !important;
+}
+/* 이미지가 존재하지 않을 경우 기본 색상 */
+.v-image {
+  background: #d3d3d3;
 }
