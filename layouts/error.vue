@@ -1,43 +1,18 @@
 <template>
   <v-app>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/"> Home page </NuxtLink>
+    <div class="mt-10">
+      <div class="d-flex justify-center align-center">
+        <div class="text-h5">페이지를 찾을 수 없습니다</div>
+      </div>
+      <div class="d-flex justify-center align-center text-Subtitle-1">
+        <NuxtLink to="/"> 여기 </NuxtLink>를 클릭하여 홈화면으로 이동해주세요
+      </div>
+    </div>
   </v-app>
 </template>
 
 <script>
 export default {
   name: 'EmptyLayout',
-  layout: 'empty',
-  props: {
-    error: {
-      type: Object,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred',
-    }
-  },
-  head() {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title,
-    }
-  },
 }
 </script>
-
-<style scoped>
-h1 {
-  font-size: 20px;
-}
-</style>

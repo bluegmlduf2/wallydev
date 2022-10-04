@@ -3,11 +3,21 @@
     <v-col cols="12" sm="8" md="6">
       <v-card class="mx-auto" max-width="500">
         <v-card dark flat>
-          <v-btn absolute bottom color="maincolor" right fab>
+          <v-btn
+            absolute
+            bottom
+            color="maincolor"
+            nuxt
+            right
+            fab
+            to="/introduce"
+          >
             <v-icon>mdi-plus</v-icon>
           </v-btn>
           <v-card-title class="pa-2 maincolor">
-            <h3 class="text-h5 pl-10 font-weight-light text-center grow">Timeline</h3>
+            <h3 class="text-h5 pl-10 font-weight-light text-center grow">
+              Timeline
+            </h3>
             <v-avatar>
               <v-img
                 src="https://avataaars.io/?avatarStyle=Circle&topType=ShortHairShortRound&accessoriesType=Blank&hairColor=Black&facialHairType=Blank&clotheType=BlazerSweater&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
@@ -33,7 +43,7 @@
                   <strong>2018.04.01</strong>
                 </v-col>
                 <v-col>
-                  <span>개발자 경력의 시작</span>
+                  <span>Beginning of Developer</span>
                 </v-col>
               </v-row>
             </v-timeline-item>
@@ -44,7 +54,7 @@
                   <strong>2020.01.01</strong>
                 </v-col>
                 <v-col>
-                  <span>일본생활 시작</span>
+                  <span>Beginning of life in Japan</span>
                 </v-col>
               </v-row>
             </v-timeline-item>
@@ -55,7 +65,7 @@
                   <strong>2022.09.01</strong>
                 </v-col>
                 <v-col>
-                  <span>개인 프로젝트 플랜몬 오픈</span>
+                  <span>Private Project (PLANMON) Open</span>
                 </v-col>
               </v-row>
             </v-timeline-item>
@@ -67,7 +77,7 @@
                 </v-col>
                 <v-col>
                   <span
-                    >개발자로 성장중 <v-icon small>mdi-laptop</v-icon>
+                    >Growing up as a developer <v-icon small>mdi-laptop</v-icon>
                   </span>
                 </v-col>
               </v-row>
@@ -76,8 +86,12 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn text nuxt to="/inspire"> GitHub </v-btn>
-          <v-btn text nuxt to="/inspire"> Planmon </v-btn>
+          <v-btn text href="https://planmon.net" target="_blank">
+            Planmon
+          </v-btn>
+          <v-btn text href="https://github.com/bluegmlduf2" target="_blank">
+            GitHub
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
