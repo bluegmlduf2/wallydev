@@ -1,0 +1,34 @@
+alembic==0.9.6
+bcrypt==3.1.4
+click==6.7
+coverage==4.4.2
+cryptography==37.0.4
+eventlet==0.31.0
+flask>=0.12.3
+Flask-Bcrypt==0.7.1
+Flask-Cors==3.0.9
+Flask-Migrate==2.1.1  # (ORM) 파이썬의 ORM의 테이블을 생성하고 컬럼을 추가하는 등의 작업을 할 수 있게 준다 (설치시 SQLAlchemy도 자동설치)
+flask-restx==0.5.1
+Flask-Script==2.0.6
+Flask-SQLAlchemy==2.5.1 # (ORM) 파이썬 ORM중의 하나. (mysql, Postgres, oracle, mssql, sqlite 등)을 지원함 
+Flask-Testing==0.7.1
+PyMySQL==1.0.2 # 파이선과 mysql의 커넥터
+gunicorn==19.7.1
+itsdangerous==0.24
+Jinja2>=2.10.1
+jsonschema==2.6.0
+Mako==1.0.7
+pycparser==2.18
+PyJWT==1.5.3
+python-dateutil==2.6.1
+pytz==2017.3
+selenium==3.8.1
+six==1.11.0
+SQLAlchemy>=1.3.0
+Werkzeug==0.15.5
+Pillow==8.4.0
+
+markupsafe==2.0.1 # 추가함
+python-dotenv # .env에 설정파일추가를 위해 설치
+firebase-admin==5.2.0 # 파이어베이스 인증위해 추가 
+#psycopg2-binary==2.8.5# postgre사용하지않기때문에 추가안함
