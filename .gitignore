@@ -203,7 +203,6 @@ wallydev-firebase-adminsdk.json
 # 이미지 저장폴더
 server/main/image/postimage/*.jpg
 server/main/image/posttempimage/*.jpg
-server/main/image/userimage/*.jpg
 
 # 로그폴더
 log/logfile*

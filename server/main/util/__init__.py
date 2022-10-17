@@ -68,14 +68,14 @@ def get_current_time():
 
 def sort_by_id(postIds):
     '''매개변수로 전달된 리스트의 순서를 postIds의 순서에 맞춰 변경한다'''
-    # 순환참조 List를 import시 발생하는 순환참조에러 방지를 위해 아래와같이 import (circular import)
-    from server.main.model.list import List
+    # 순환참조 Post를 import시 발생하는 순환참조에러 방지를 위해 아래와같이 import (circular import)
+    from server.main.model.post import Post
     
     # 사용자 정렬 (등록일순)
     if postIds:
         return case(
             {_id: index for index, _id in enumerate(postIds)},
-            value=List.postId
+            value=Post.postId
         )
     else:
         return None
@@ -133,70 +133,6 @@ def upload_image(param):
         raise e
     else:
         return url,resize_image_fileNm
-
-
-def upload_user_image(param):
-    '''유저 이미지 추가'''
-    try:
-        # 파일명변경
-        time = get_current_time().strftime('%Y%m%d%H%M%S')  # 현재시간을 YYYYmmddHHMMSS 형태의 시간 출력
-        ranNum = str(random.randint(1, 999999)).rjust(4, "0")  # 난수4자리,공백은0으로채움
-        resize_image_fileNm = time+ranNum+".jpg"  # 변경후 저장한 파일명
-
-        # 이미지 열기
-        image = Image.open(param)
-        
-        # 이미지 너비가 넓을경우 90도 회전이 되는데 그걸 방지
-        for orientation in ExifTags.TAGS.keys() : 
-            if ExifTags.TAGS[orientation]=='Orientation' : break 
-
-        try:
-            exif = dict(image._getexif().items())
-            # 사진을 촬영한 기기에 입력된 회전정보
-            rotateInfo=exif.get('orientation',None)
-
-            # 카메라나 스마트폰 카메라로 사진을 찍으면 JPEG 화상과 함게 기기 내의 중력센서를 이용한 회전 정보(3,6,8)가 EXIF 태그 중 하나로서 담긴다.
-            if rotateInfo == 3 : 
-                image=image.rotate(180, expand=True)
-            elif rotateInfo == 6 : 
-                image=image.rotate(270, expand=True)
-            elif rotateInfo == 8 : 
-                image=image.rotate(90, expand=True)
-        except AttributeError:
-            # items()의 속성이 없는 경우 image를 회전하지않고 그대로 사용
-            image=image
-
-        # 이미지 저장  
-        resize_image_file = image.resize((180, 180)) # 160,160 이미지 사이즈변경
-        source = current_app.config['USER_FILE_PATH']+resize_image_fileNm  # 유저이미지파일저장경로
-
-        # RGB형식으로 변경후 , 이미지 파일 저장
-        resize_image_file.convert('RGB').save(source)  # resize사용시 image -> resize_image
-
-        # 저장된 이미지의 URL
-        url = current_app.config['SERVER_IMAGE_URL']+'userimage/'+resize_image_fileNm
-    except IOError:
-        # 파일형식이 이미지인가 체크
-        raise UserError(753)
-    except Exception as e:
-        raise e
-    else:
-        return url
-
-
-def delete_user_image(user_image):
-    '''유저 이미지 삭제'''
-    try:
-        if user_image:
-            userImageName=user_image[user_image.rindex('/')+1:] # 유저아마자파일명취득
-
-            # 파일 이동에 필요한 설정부분
-            userImageFilePath = current_app.config['USER_FILE_PATH']+userImageName # 유저 이미지 저장 위치
-            # 파일이 존재할 경우 삭제
-            if os.path.isfile(userImageFilePath):
-                os.remove(userImageFilePath) # 파일삭제
-    except Exception as e:
-        raise e
 
 
 # 임시이미지 파일을 저장용 폴더에 이동

@@ -1,10 +1,9 @@
 from . import *
 from server.main.util.dto import PostDto
-from server.main.service.post_service import get_post,get_post_detail,update_post_date,create_post,update_post
+from server.main.service.post_service import get_post,get_post_detail,create_post,update_post
 
 api = PostDto.api
 _post = PostDto.post
-_postupdatedate = PostDto.postupdatedate
 
 
 @api.route('')
@@ -48,15 +47,3 @@ class PostDetail(Resource):
         """게시물에서 특정 정보만 취득"""
         payload = request.json
         return get_post_detail(param,payload)
-
-
-@api.route('/update/post-date')
-class PostUpdateDate(Resource):
-    @token_required
-    @exception_handler
-    @api.doc('게시물의 일정시적일과 일정종료일을 갱신')
-    @api.marshal_with(_postupdatedate, envelope='data')
-    def put(uid,self):
-        """게시물의 일정시작일과 종료일을 갱신"""
-        payload = request.json
-        return update_post_date(uid,payload)

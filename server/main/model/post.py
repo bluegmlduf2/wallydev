@@ -1,8 +1,8 @@
 from . import *
 
-class List(db.Model):
+class Post(db.Model):
     """ 리스트정보 취득 """
-    __tablename__ = "list"
+    __tablename__ = "post"
 
     postId = db.Column(db.String(255), primary_key=True)
     writerUid = db.Column(db.String(255), primary_key=True)
@@ -23,4 +23,4 @@ class List(db.Model):
         self.updatedDate = get_current_time() # 수정시간 초기화
 
     def __repr__(self):
-        return "<List '{}'>".format(self.postId)
+        return "<Post '{}'>".format(self.postId)

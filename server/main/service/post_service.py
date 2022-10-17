@@ -1,6 +1,5 @@
 from . import *
 from server.main.service.comment_service import get_comment
-from server.main.service.rec_list_service import update_reclist
 
 def get_post(uid,postId):
     '''게시물 정보 취득'''
@@ -10,7 +9,7 @@ def get_post(uid,postId):
         raise UserError(701,'필수항목')
 
     # 게시물 관련
-    post = List.query.filter_by(postId=postId).first() # 게시물 정보 취득
+    post = Post.query.filter_by(postId=postId).first() # 게시물 정보 취득
 
     # 게시물존재여부체크
     if not post:
@@ -19,8 +18,8 @@ def get_post(uid,postId):
     # 유저정보 관련
     user = Auth.get_user_info(post.writerUid) # 파이어베이스에 저장된 유저정보 취득
     userAuth = True # 게시물 작성자인 경우
-    isAdded = bool(Mylist.query.filter_by(myListIdRef=postId,uid=uid).count()) # 이미 추가한 일정유무
-    isCompleted = bool(Mylist.query.filter_by(myListIdRef=postId,uid=uid,listKind='complete').count()) # 완료 일정유무
+    # isAdded = bool(Mylist.query.filter_by(myListIdRef=postId,uid=uid).count()) # 이미 추가한 일정유무
+    # isCompleted = bool(Mylist.query.filter_by(myListIdRef=postId,uid=uid,listKind='complete').count()) # 완료 일정유무
     
     # 게시물 작성자가 아닌 경우
     if uid != post.writerUid:
@@ -29,16 +28,16 @@ def get_post(uid,postId):
 
     setattr(post,'writerUserName',user['nickname']) # 게시물 작성자의 닉네임등록
     setattr(post,'userAuth',userAuth) # 게시물 작성자 유무
-    setattr(post,'isAdded',isAdded) # 추가한 일정 유무
-    setattr(post,'isCompleted',isCompleted) # 완료 일정 유무
+    # setattr(post,'isAdded',isAdded) # 추가한 일정 유무
+    # setattr(post,'isCompleted',isCompleted) # 완료 일정 유무
 
     # 로그인 유저일시 , 게시글 작성자가 아닐시 일정시작일시 등록
-    if uid and not userAuth:
-        mylist = Mylist.query.filter_by(myListIdRef=postId,uid=uid).first() # 게시물 정보 취득
-        # 로그인 유저가 추가한 게시물인지 확인
-        if mylist:
-            setattr(post,'myStartDate', mylist.myStartDate ) # 로그인 유저의 일정 시작일
-            setattr(post,'myEndDate', mylist.myEndDate ) # 로그인 유저의 일정 종료일               
+    # if uid and not userAuth:
+    #     mylist = Mylist.query.filter_by(myListIdRef=postId,uid=uid).first() # 게시물 정보 취득
+    #     # 로그인 유저가 추가한 게시물인지 확인
+    #     if mylist:
+    #         setattr(post,'myStartDate', mylist.myStartDate ) # 로그인 유저의 일정 시작일
+    #         setattr(post,'myEndDate', mylist.myEndDate ) # 로그인 유저의 일정 종료일               
     
     # 댓글과 대댓글정보 등록
     comment = get_comment(uid,postId)
@@ -103,7 +102,7 @@ def create_post(uid,payload):
             moveImageFile(inputData['tempImages'])            
             
             # 등록할 게시물 정보입력
-            post = List()
+            post = Post()
             post.writerUid = uid
             post.title = inputData['title']
             post.content = inputData['content']
@@ -115,10 +114,6 @@ def create_post(uid,payload):
 
             db.session.add(post)
             db.session.commit()
-
-            
-            # 할일 일정에 추가 
-            update_reclist(uid,post.postId)
 
             response_object = {
                 'status': 'success',
@@ -188,7 +183,7 @@ def update_post(uid,payload):
             moveImageFile(inputData['tempImages'])       
 
             # 수정할 게시물 정보입력
-            post = List.query.filter_by(writerUid=uid, postId=inputData['postId']).first()
+            post = Post.query.filter_by(writerUid=uid, postId=inputData['postId']).first()
             # 게시물존재여부체크
             if not post:
                 raise UserError(702,'게시물')
@@ -227,38 +222,7 @@ def get_post_detail(postId,requestItem):
     if not postId or not requestItem:
         raise UserError(701,'필수항목')
 
-    post_detail_column = [getattr(List,attr) for attr in requestItem] # 취득할 데이터
-    post_detail = List.query.filter_by(postId=postId).\
+    post_detail_column = [getattr(Post,attr) for attr in requestItem] # 취득할 데이터
+    post_detail = Post.query.filter_by(postId=postId).\
         with_entities(*post_detail_column).first()
     return post_detail
-
-
-def update_post_date(uid,param):
-    '''게시물의 일정시작일과 일정종료일을 갱신'''
-    # 필수 입력정보가 전부 입력되어있는지 확인
-    if not param['postId'] or not param['myStartDate'] or not param['myEndDate']:
-        raise UserError(701,'필수항목')
-
-    # 기존 데이터 취득
-    myTodoList = Mylist.query.filter_by(uid=uid, myListIdRef=param['postId']).first()
-
-    # 기존 등록일정 존재여부체크
-    if not myTodoList:
-        raise UserError(702,'기존 등록 일정')
-
-    # 일정 시작일이 종료일보다 큰 경우
-    if param['myStartDate'] > param['myEndDate']:
-        raise UserError(705)
-
-    # 일정시작일과 일정종료일을 갱신
-    myTodoList.myStartDate = convert_string_to_date(param['myStartDate'])
-    myTodoList.myEndDate = convert_string_to_date(param['myEndDate'])
-
-    # 커밋
-    db.session.commit()
-                
-    response_object = {
-        'myStartDate': myTodoList.myStartDate,
-        'myEndDate': myTodoList.myEndDate
-    }
-    return response_object

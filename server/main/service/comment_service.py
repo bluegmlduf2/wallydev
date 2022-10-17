@@ -8,30 +8,18 @@ def get_comment(uid,postId):
 
     # 댓글과 대댓글 정보취득
     comment = db.session.query(Comment).\
-        outerjoin(CommentReply,Comment.commentId == CommentReply.commentReplyRefId).\
         filter(Comment.postIdRef==postId).\
         order_by(Comment.commentAddedDate).all()
 
         # 댓글과 대댓글의 정보를 변환
     for c in comment:
         commentData=c # 댓글데이터
-        commentReplyData=c.commentReply # 대댓글데이터
 
         # 댓글데이터
         comment_user = Auth.get_user_info(commentData.commentUid) # 파이어베이스에 저장된 유저정보 취득
         comment_user_auth = True if uid == commentData.commentUid else False #댓글 작성자 유무
         setattr(commentData,'commentUserName',comment_user['nickname']) # 댓글 작성자의 닉네임등록
-        setattr(commentData,'commentUserImage',comment_user['user_image']) # 댓글 작성자의 이미지 url
         setattr(commentData,'commentUserAuth',comment_user_auth) # 댓글 작성자 유무
-
-        # 대댓글데이터
-        if commentReplyData:
-            for commentReply in commentReplyData:
-                comment_reply_user = Auth.get_user_info(commentReply.commentReplyUid) # 파이어베이스에 저장된 유저정보 취득
-                comment_user_reply_auth = True if uid == commentReply.commentReplyUid else False #대댓글 작성자 유무
-                setattr(commentReply,'commentReplyUserName',comment_reply_user['nickname']) # 대댓글 작성자의 닉네임등록
-                setattr(commentReply,'commentReplyUserImage',comment_reply_user['user_image']) # 대댓글 작성자의 이미지 url
-                setattr(commentReply,'commentReplyUserAuth',comment_user_reply_auth) # 대댓글 작성자 유무
 
     return comment
 
@@ -112,20 +100,15 @@ def destroy_comment(uid,commentId):
         user=User.query.filter_by(uid=uid).first()
         # 기존 유저가 존재할 경우 유저선택정보를 갱신
         if user:
-            comment_reply = CommentReply.query.filter_by(commentReplyRefId=commentId).count()
-            # 대댓글이 존재하지 않는 댓글만 삭제가능
-            if not comment_reply:
-                Comment.query.filter_by(commentUid=uid, commentId=commentId).delete()
+            Comment.query.filter_by(commentUid=uid, commentId=commentId).delete()
 
-                db.session.commit()
-                            
-                response_object = {
-                    'status': 'success',
-                    'message': '댓글을 삭제했습니다'
-                }
-                return response_object, 201
-            else:
-                raise UserError(700,'대댓글이 존재하므로 삭제할수없습니다')
+            db.session.commit()
+                        
+            response_object = {
+                'status': 'success',
+                'message': '댓글을 삭제했습니다'
+            }
+            return response_object, 201
     except exc.IntegrityError as e:
         # 이미 등록된 데이터가 존재할 경우
         raise UserError(703,'삭제된 댓글')

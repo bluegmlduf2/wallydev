@@ -16,9 +16,6 @@ class Config:
     # 게시물 이미지 임시 저장 경로와 저장된 게시물 저장경로
     POST_TEMP_FILE_PATH = basedir+'/image/posttempimage/'
     POST_FILE_PATH = basedir+'/image/postimage/'
-    # 유저 이미지 저장경로
-    USER_FILE_PATH = basedir+'/image/userimage/'
-
 
 class DevelopmentConfig(Config):
     # 개발환경에서 사용할 sqllite

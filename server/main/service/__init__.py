@@ -1,10 +1,8 @@
 # 서비스에서 공통으로 사용하는 모듈
 from server.main import db
-from server.main.model.list import List
+from server.main.model.post import Post
 from server.main.model.user import User
-from server.main.model.mylist import Mylist
 from server.main.model.comment import Comment
-from server.main.model.commentreply import CommentReply
 from server.main.service.auth_helper import Auth
 from server.main.util import UserError,get_current_time,sort_by_id,convert_string_to_date,moveImageFile
 from sqlalchemy import exc,case
@@ -50,14 +48,7 @@ def get_filter_condition_by_searchword(selection):
         # 재검색시 사용하는 검색조건 (제목과 내용에 해당 단어를 포함하는지 검색)
         search = "%{}%".format(searchWord)
         # 재검색의 검색조건 반환
-        return (List.title.like(search))|(List.content.like(search))
+        return (Post.title.like(search))|(Post.content.like(search))
     else:
     # 검색어가 존재하지않을 경우 (모든일정표시)
         return True
-
-def get_recommended_enddate(post):
-    '''게시물의 일정시작일과 종료일을 참조해서 추천 종료일을 반환'''
-    # 게시물의 시작일과 종료일을 뺀 일자
-    recommended_enddate=(post.endDate-post.startDate).days
-    return datetime.strptime(get_current_time().strftime("%Y/%m/%d"), "%Y/%m/%d")\
-            +timedelta(days=recommended_enddate) # 게시물의 입국일 경과일을 더한 추천 종료 일수
