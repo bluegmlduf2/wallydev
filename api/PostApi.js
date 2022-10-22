@@ -13,42 +13,13 @@ class PostApi extends BaseApi {
 
   /**
    * 게시물 가져오기
-   */
-  getPosts({ searchText, category, page }) {
-    const params = { _page: page, _limit: '12' }
-
-    // 검색어조건이 있는 경우와 없는 경우
-    if (searchText) {
-      params.q = searchText
-    } else {
-      params.category = category
-    }
-
-    // 게시물을 12개씩 가져온다
-    this.setParameters(params)
-    return this.all()
-  }
-
-  /**
-   * 게시물 가져오기
    *
    * @param {String} postId 게시물 번호
    *
    * @returns {Promise} The result in a promise.
    */
-  getPostDetail(postId) {
+   getPost(postId) {
     return this.find(postId)
-  }
-
-  /**
-   * 게시물의 사용자 일정 변경
-   *
-   * @param {String} sort 정렬
-   *
-   * @returns {Promise} The result in a promise.
-   */
-  updatePostCalendar(param) {
-    return this.submit('put', `${this.endpoint}/update/post-date`, param)
   }
 
   /**

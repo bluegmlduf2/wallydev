@@ -49,7 +49,7 @@ export default {
   methods: {
     async getPostsBySearchText() {
       this.searchText = this.$route.query?.searchText || ''
-      await this.$store.dispatch('getPosts', {
+      await this.$store.dispatch('getPostList', {
         searchText: this.searchText,
         page: 1,
       })
@@ -59,7 +59,7 @@ export default {
       setTimeout(async () => {
         this.page++
         // 게시글 더 가져오기
-        const isMoreData = await this.$store.dispatch('getPosts', {
+        const isMoreData = await this.$store.dispatch('getPostList', {
           searchText: this.searchText,
           page: this.page,
         })

@@ -1,19 +1,16 @@
 from . import *
 
 class Post(db.Model):
-    """ 리스트정보 취득 """
+    """ 게시물 정보 취득 """
     __tablename__ = "post"
 
     postId = db.Column(db.String(255), primary_key=True)
     writerUid = db.Column(db.String(255), primary_key=True)
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text(), nullable=False)
-    country = db.Column(db.String(2), nullable=False)
-    stayStatus = db.Column(db. String(1), nullable=False)
+    category = db.Column(db.String(255), nullable=False)
+    imageUrl = db.Column(db.String(255))
     postViewCount = db.Column(db.Integer, nullable=False ,default=0)
-    afterEntryDate = db.Column(db.Integer, nullable=True ,default=0)
-    startDate = db.Column(db.Date, nullable=False)
-    endDate = db.Column(db.Date, nullable=False)
     createdDate = db.Column(db.DateTime, nullable=False)
     updatedDate = db.Column(db.DateTime, nullable=False)
 

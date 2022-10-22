@@ -1,15 +1,15 @@
 <template>
   <v-container>
     <v-row class="mb-6" justify="start">
-      <v-col v-for="e in post" :key="e.id" cols="12" sm="6" md="4" lg="3">
+      <v-col v-for="e in postList" :key="e.postId" cols="12" sm="6" md="4" lg="3">
         <v-card max-width="344" class="hover-up">
           <v-img :src="e.imageUrl" height="200px"></v-img>
           <v-card-title> {{ e.title }} </v-card-title>
           <v-card-subtitle class="subtitle-body text-overflow">
-            {{ e.postContent }}
+            {{ e.content }}
           </v-card-subtitle>
           <v-card-actions class="d-flex justify-end">
-            <v-btn color="maincolor" text nuxt :to="`${category}/${e.id}`">
+            <v-btn color="maincolor" text nuxt :to="`${category}/${e.postId}`">
               더보기
             </v-btn>
           </v-card-actions>
@@ -26,8 +26,7 @@ export default {
   name: 'IndexCategory',
   async asyncData({ params, store }) {
     const category = params.category
-    await store.dispatch('getPosts', { category, page: 1 })
-
+    await store.dispatch('getPostList', { category, page: 1 })
     return { category }
   },
   data() {
@@ -37,8 +36,8 @@ export default {
     }
   },
   computed: {
-    post() {
-      return this.$store.getters.post
+    postList() {
+      return this.$store.getters.postList
     },
   },
   methods: {
@@ -47,7 +46,7 @@ export default {
       setTimeout(async () => {
         this.page++
         // 게시글 더 가져오기
-        const isMoreData = await this.$store.dispatch('getPosts', {
+        const isMoreData = await this.$store.dispatch('getPostList', {
           category: this.category,
           page: this.page,
         })

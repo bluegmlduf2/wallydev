@@ -1,15 +1,11 @@
 from . import *
 from server.main.service.comment_service import get_comment
 
-def get_post(uid,postId):
+def get_post(uid,payload):
     '''게시물 정보 취득'''
 
-    # 필수 입력정보가 전부 입력되어있는지 확인
-    if not postId:
-        raise UserError(701,'필수항목')
-
     # 게시물 관련
-    post = Post.query.filter_by(postId=postId).first() # 게시물 정보 취득
+    post = Post.query.filter_by(postId=payload['postId']).first() # 게시물 정보 취득
 
     # 게시물존재여부체크
     if not post:
@@ -18,32 +14,36 @@ def get_post(uid,postId):
     # 유저정보 관련
     user = Auth.get_user_info(post.writerUid) # 파이어베이스에 저장된 유저정보 취득
     userAuth = True # 게시물 작성자인 경우
-    # isAdded = bool(Mylist.query.filter_by(myListIdRef=postId,uid=uid).count()) # 이미 추가한 일정유무
-    # isCompleted = bool(Mylist.query.filter_by(myListIdRef=postId,uid=uid,listKind='complete').count()) # 완료 일정유무
-    
+
+    setattr(post,'writerUserName',user['nickname']) # 게시물 작성자의 닉네임등록
+    setattr(post,'userAuth',userAuth) # 게시물 작성자 유무
+
     # 게시물 작성자가 아닌 경우
     if uid != post.writerUid:
         userAuth = False # 게시물 작성자가 아닌 경우
         update_view_count(post) # 게시물의 조회수 증가
-
-    setattr(post,'writerUserName',user['nickname']) # 게시물 작성자의 닉네임등록
-    setattr(post,'userAuth',userAuth) # 게시물 작성자 유무
-    # setattr(post,'isAdded',isAdded) # 추가한 일정 유무
-    # setattr(post,'isCompleted',isCompleted) # 완료 일정 유무
-
-    # 로그인 유저일시 , 게시글 작성자가 아닐시 일정시작일시 등록
-    # if uid and not userAuth:
-    #     mylist = Mylist.query.filter_by(myListIdRef=postId,uid=uid).first() # 게시물 정보 취득
-    #     # 로그인 유저가 추가한 게시물인지 확인
-    #     if mylist:
-    #         setattr(post,'myStartDate', mylist.myStartDate ) # 로그인 유저의 일정 시작일
-    #         setattr(post,'myEndDate', mylist.myEndDate ) # 로그인 유저의 일정 종료일               
     
     # 댓글과 대댓글정보 등록
-    comment = get_comment(uid,postId)
+    comment = get_comment(uid,payload)
     setattr(post,'comment', comment)
 
     return post
+
+def get_post_list(payload):
+    '''게시물 리스트 정보 취득'''
+
+    # 재검색시 사용하는 검색조건
+    filterSearchWord = get_filter_condition_by_searchtext(payload)
+    page=int(payload['page'])
+    limit=int(payload['limit'])
+
+    # 내 할일일정의 상세 정보 취득
+    postQuery = Post.query.filter(filterSearchWord).\
+        order_by(Post.createdDate)
+
+    postList = postQuery.paginate(page,limit,error_out=False).items # 할일일정의 페이지네이션 된 값
+
+    return postList
 
 
 def create_post(uid,payload):

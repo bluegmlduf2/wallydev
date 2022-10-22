@@ -116,7 +116,7 @@ export default {
   },
   async asyncData({ params, store }) {
     const postId = params.postId
-    await store.dispatch('getPostDetail', postId)
+    await store.dispatch('getPost', postId)
   },
   data() {
     return {

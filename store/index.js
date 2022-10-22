@@ -1,7 +1,9 @@
 import PostApi from '~/api/PostApi'
+import PostListApi from '~/api/PostListApi'
 
 export const state = () => ({
-  post: [],
+  post: null,
+  postList: [],
   authUser: null,
 })
 
@@ -9,8 +11,11 @@ export const mutations = {
   SET_POST: (state, payload) => {
     state.post = payload
   },
-  ADD_POST: (state, payload) => {
-    state.post = [...state.post, ...payload]
+  SET_POST_LIST: (state, payload) => {
+    state.postList = payload
+  },
+  ADD_POST_LIST: (state, payload) => {
+    state.postList = [...state.postList, ...payload]
   },
   SET_COMMENT_OPEN: (state, payload) => {
     // 댓글을 수정상태로 변경
@@ -86,33 +91,34 @@ export const actions = {
     commit('SET_USER', { authUser, claims })
   },
 
-  async getPosts({ commit }, payload) {
-    // 게시물 정보 취득
-    return await new PostApi()
-      .getPosts(payload)
+  async getPostList({ commit }, payload) {
+    // 게시물 리스트 정보 취득
+    return await new PostListApi()
+      .getPostList(payload)
       .then((response) => {
+
         // 최초 게시물을 초기화시
         if (payload.page === 1) {
-          commit('SET_POST', response)
+          commit('SET_POST_LIST', response.data)
         } else if (payload.page > 1) {
           // 스크롤에 의해 게시물 더보기시
-          commit('ADD_POST', response)
+          commit('ADD_POST_LIST', response.data)
         }
         // 남은 게시글수 반환
-        return response?.length || 0
+        return response?.data.length || 0
       })
       .catch((e) => {
         console.warn(e)
       })
   },
 
-  async getPostDetail({ commit }, payload) {
+  async getPost({ commit }, payload) {
     // 게시물 상세 정보 취득
     return await new PostApi()
-      .getPostDetail(payload)
+      .getPost(payload)
       .then((response) => {
         // 서버에서 가져온 게시물을 초기화
-        commit('SET_POST', response)
+        commit('SET_POST', response.data)
       })
       .catch((e) => {
         console.warn(e)
@@ -123,6 +129,9 @@ export const actions = {
 export const getters = {
   post(state) {
     return state.post
+  },
+  postList(state) {
+    return state.postList
   },
   isLoggedIn: (state) => !!state?.authUser,
   isAdminIn: (state) => !!state?.authUser?.isAdmin,

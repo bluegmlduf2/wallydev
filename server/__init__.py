@@ -9,7 +9,7 @@ import firebase_admin # 서버 파 파이어베이스 모듈
 from firebase_admin import credentials # 파이어베이스 초기화모듈
 
 
-blueprint = Blueprint('api', __name__) # __name__는 현재 모듈이다. 여기선 디렉토리 app이다. 이것을 Bluepirnt에 등록
+blueprint = Blueprint('api_wallydev', __name__) # __name__는 현재 모듈이다. 여기선 디렉토리 app이다. 이것을 Bluepirnt에 등록
 
 # 파이어베이스 초기화 
 cred = credentials.Certificate('wallydev-firebase-adminsdk.json')
@@ -26,6 +26,7 @@ api = Api(
     security='apikey'
 )
 
-api.add_namespace(post_ns, path='/api/post')
-api.add_namespace(comment_ns, path='/api/comment')
-api.add_namespace(image_ns, path='/api/image')
+api.add_namespace(post_ns, path='/api_wallydev/post')
+api.add_namespace(post_ns, path='/api_wallydev/post/postlist')
+api.add_namespace(comment_ns, path='/api_wallydev/comment')
+api.add_namespace(image_ns, path='/api_wallydev/image')
