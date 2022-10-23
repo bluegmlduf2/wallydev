@@ -23,6 +23,9 @@ def get_post(uid,postId):
     setattr(post,'writerUserName',user['nickname']) # 게시물 작성자의 닉네임등록
     setattr(post,'userAuth',userAuth) # 게시물 작성자 유무
 
+    # 댓글정보 취득
+    comment = get_comment(uid,postId)
+    setattr(post,'comment', comment)
 
     return post
 

@@ -9,11 +9,9 @@ class PostDto:
         'writerUserName': fields.String(description='댓글 작성자'),
         'commentContent': fields.String(description='댓글 내용'),
         'createdDate': fields.Date(description='댓글 작성일'),
-        'updatedDate': fields.Date(description='댓글 작성일'),
+        'updatedDate': fields.Date(description='댓글 수정일'),
         'commentUserAuth': fields.Boolean(description='댓글작성자유무'),
-        'isOpenClicked': fields.Boolean(description='댓글 열기닫기버튼 활성화유무',default=False),
-        'isCommentClicked': fields.Boolean(description='댓글 수정버튼 활성화유무',default=False),
-        'isWriteClicked': fields.Boolean(description='댓글 댓글작성버튼 활성화유무',default=False),
+        'isUpdated': fields.Boolean(description='댓글 수정/저장 모드',default=True),
     })# 댓글의 스키마
     post = api.model('post', {
         'postId': fields.String(description='게시물 번호'),
@@ -42,9 +40,7 @@ class CommentDto:
         'writerUserName': fields.String(description='댓글 작성자'),
         'commentContent': fields.String(description='댓글 내용'),
         'createdDate': fields.Date(description='댓글 작성일'),
-        'updatedDate': fields.Date(description='댓글 작성일'),
+        'updatedDate': fields.Date(description='댓글 수정일'),
         'commentUserAuth': fields.Boolean(description='댓글작성자유무'),
-        'isOpenClicked': fields.Boolean(description='댓글 열기닫기버튼 활성화유무',default=False),
-        'isCommentClicked': fields.Boolean(description='댓글 수정버튼 활성화유무',default=False),
-        'isWriteClicked': fields.Boolean(description='댓글 댓글작성버튼 활성화유무',default=False),
+        'isUpdated': fields.Boolean(description='댓글 수정/저장 모드',default=True),
     })# 댓글의 스키마

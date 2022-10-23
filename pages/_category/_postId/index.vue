@@ -45,21 +45,21 @@
     <v-row>
       <v-card
         v-for="item in post.comment"
-        :key="item.id"
+        :key="item.commentId"
         class="mx-3 my-2 card-no-border"
         width="100%"
         outlined
       >
         <v-list-item>
           <v-list-item-content class="pt-5 pb-0">
-            <div class="text-h6">{{ item.commentUserName }}</div>
-            <div class="text-caption mb-4">{{ item.commentDate }}</div>
+            <div class="text-h6">{{ item.writerUserName }}</div>
+            <div class="text-caption mb-4">{{ item.createdDate }}</div>
             <v-textarea
               class="text-body-1 comment-content"
               flat
               solo
-              :outlined="!item.isUpdate"
-              :readonly="item.isUpdate"
+              :outlined="!item.isUpdated"
+              :readonly="item.isUpdated"
               :value="item.commentContent"
               no-resize
               rows="1"
@@ -69,30 +69,30 @@
             />
           </v-list-item-content>
         </v-list-item>
-        <v-card-actions v-if="isLoggedIn && item.isMe">
+        <v-card-actions v-if="isLoggedIn && item.commentUserAuth">
           <v-btn
             outlined
             rounded
             text
             @click="
-              item.isUpdate
+              item.isUpdated
                 ? changeCommentOpen(item, false)
                 : updateComment(item)
             "
           >
-            {{ item.isUpdate ? '수정' : '저장' }}
+            {{ item.isUpdated ? '수정' : '저장' }}
           </v-btn>
           <v-btn
             outlined
             rounded
             text
             @click="
-              item.isUpdate
+              item.isUpdated
                 ? deleteComment(item)
                 : changeCommentOpen(item, true)
             "
           >
-            {{ item.isUpdate ? '삭제' : '취소' }}
+            {{ item.isUpdated ? '삭제' : '취소' }}
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -156,7 +156,7 @@ export default {
     changeCommentOpen(comment, isActive) {
       this.$store.commit('SET_COMMENT_OPEN', {
         ...comment,
-        isUpdate: isActive,
+        isUpdated: isActive,
       })
     },
   },

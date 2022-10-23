@@ -14,6 +14,10 @@ class Comment(Resource):
     @api.marshal_list_with(_comment, envelope='data')
     def get(uid,self,param):
         """댓글 정보를 반환"""
+        # 필수 입력정보가 전부 입력되어있는지 확인
+        if not param:
+            raise UserError(701,'필수항목')
+
         return get_comment(uid,param)
 
     @token_required

@@ -20,7 +20,9 @@ export const mutations = {
   SET_COMMENT_OPEN: (state, payload) => {
     // 댓글을 수정상태로 변경
     state.post.comment = state.post.comment.map((e) =>
-      e.id === payload.id ? { ...e, isUpdate: payload.isUpdate } : e
+      e.commentId === payload.commentId
+        ? { ...e, isUpdated: payload.isUpdated }
+        : e
     )
   },
   // stateを空にします
@@ -96,7 +98,6 @@ export const actions = {
     return await new PostListApi()
       .getPostList(payload)
       .then((response) => {
-
         // 최초 게시물을 초기화시
         if (payload.page === 1) {
           commit('SET_POST_LIST', response.data)

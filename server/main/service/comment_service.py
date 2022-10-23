@@ -2,23 +2,19 @@ from . import *
 
 def get_comment(uid,postId):
     '''댓글 정보 취득'''
-    # 필수 입력정보가 전부 입력되어있는지 확인
-    if not postId:
-        raise UserError(701,'필수항목')
-
-    # 댓글과 대댓글 정보취득
+    # 댓글 정보취득
     comment = db.session.query(Comment).\
         filter(Comment.postIdRef==postId).\
-        order_by(Comment.commentAddedDate).all()
+        order_by(Comment.createdDate).all()
 
-        # 댓글과 대댓글의 정보를 변환
+    # 댓글 정보를 변환
     for c in comment:
         commentData=c # 댓글데이터
 
         # 댓글데이터
-        comment_user = Auth.get_user_info(commentData.commentUid) # 파이어베이스에 저장된 유저정보 취득
-        comment_user_auth = True if uid == commentData.commentUid else False #댓글 작성자 유무
-        setattr(commentData,'commentUserName',comment_user['nickname']) # 댓글 작성자의 닉네임등록
+        comment_user = Auth.get_user_info(commentData.writerUid) # 파이어베이스에 저장된 유저정보 취득
+        comment_user_auth = True if uid == commentData.writerUid else False #댓글 작성자 유무
+        setattr(commentData,'writerUserName',comment_user['nickname']) # 댓글 작성자의 닉네임등록
         setattr(commentData,'commentUserAuth',comment_user_auth) # 댓글 작성자 유무
 
     return comment
