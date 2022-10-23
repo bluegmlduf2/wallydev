@@ -36,9 +36,11 @@ def get_post_list(payload):
     filterSearchWord = get_filter_condition_by_searchtext(payload)
     page=int(payload['page'])
     limit=int(payload['limit'])
+    category=payload['category']
 
     # 내 할일일정의 상세 정보 취득
-    postQuery = Post.query.filter(filterSearchWord).\
+    postQuery = Post.query.filter_by(category=category).\
+        filter(filterSearchWord).\
         order_by(Post.createdDate)
 
     postList = postQuery.paginate(page,limit,error_out=False).items # 할일일정의 페이지네이션 된 값
