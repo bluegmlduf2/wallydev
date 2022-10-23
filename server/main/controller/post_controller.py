@@ -6,39 +6,44 @@ api = PostDto.api
 _post = PostDto.post
 
 
-@api.route('')
+@api.route('/<param>')
+@api.param('param', '게시물 번호')
 class Post(Resource):
     @get_user_by_token
     @exception_handler
     @api.doc('게시물 가져오기')
     @api.marshal_list_with(_post, envelope='data')
-    def get(uid,self):
+    def get(uid,self,param):
         """게시물 정보를 취득"""
-        payload = request.args.to_dict()
-    
         # 필수 입력정보가 전부 입력되어있는지 확인
-        if not payload.get('postId',False):
+        if not param:
             raise UserError(701,'필수항목')
 
-        return get_post(uid,payload)
+        return get_post(uid,param)
 
     @token_required
     @exception_handler
     @api.doc('게시물 등록')
     @api.marshal_list_with(_post, envelope='data')
-    def post(uid,self):
+    def post(uid,self,param):
         """게시물 정보를 등록"""
-        payload = request.json
-        return create_post(uid,payload)
+        # 필수 입력정보가 전부 입력되어있는지 확인
+        if not param:
+            raise UserError(701,'필수항목')
+
+        return create_post(uid,param)
 
     @token_required
     @exception_handler
     @api.doc('게시물 수정')
     @api.marshal_list_with(_post, envelope='data')
-    def put(uid,self):
+    def put(uid,self,param):
+        # 필수 입력정보가 전부 입력되어있는지 확인
+        if not param:
+            raise UserError(701,'필수항목')
         """게시물 정보를 수정"""
         payload = request.json
-        return update_post(uid,payload)
+        return update_post(uid,param)
 
 @api.route('/postlist')
 class PostList(Resource):

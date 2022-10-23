@@ -1,11 +1,11 @@
 from . import *
 from server.main.service.comment_service import get_comment
 
-def get_post(uid,payload):
+def get_post(uid,postId):
     '''게시물 정보 취득'''
 
     # 게시물 관련
-    post = Post.query.filter_by(postId=payload['postId']).first() # 게시물 정보 취득
+    post = Post.query.filter_by(postId=postId).first() # 게시물 정보 취득
 
     # 게시물존재여부체크
     if not post:
@@ -15,17 +15,14 @@ def get_post(uid,payload):
     user = Auth.get_user_info(post.writerUid) # 파이어베이스에 저장된 유저정보 취득
     userAuth = True # 게시물 작성자인 경우
 
-    setattr(post,'writerUserName',user['nickname']) # 게시물 작성자의 닉네임등록
-    setattr(post,'userAuth',userAuth) # 게시물 작성자 유무
-
-    # 게시물 작성자가 아닌 경우
+    # 게시물 작성자가 아닌 경우나 로그인하지 않은 경우
     if uid != post.writerUid:
         userAuth = False # 게시물 작성자가 아닌 경우
         update_view_count(post) # 게시물의 조회수 증가
     
-    # 댓글과 대댓글정보 등록
-    comment = get_comment(uid,payload)
-    setattr(post,'comment', comment)
+    setattr(post,'writerUserName',user['nickname']) # 게시물 작성자의 닉네임등록
+    setattr(post,'userAuth',userAuth) # 게시물 작성자 유무
+
 
     return post
 

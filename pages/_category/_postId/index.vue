@@ -4,9 +4,9 @@
       <span class="text-h3 font-weight-bold">{{ post.title }}</span>
     </v-row>
     <v-row class="my-3 mx-1" align="center">
-      <span class="text-subtitle-1 font-weight-light">{{ post.postDate }}</span>
+      <span class="text-subtitle-1 font-weight-light">{{ post.createdDate }}</span>
       <span class="text-subtitle-1 font-weight-light ml-2"
-        >조회수 {{ post.readCount }}</span
+        >조회수 {{ post.postViewCount }}</span
       >
       <v-spacer></v-spacer>
       <div v-if="isLoggedIn && isAdminIn">
@@ -14,20 +14,20 @@
           class="text-subtitle-1 font-weight-light px-0"
           text
           small
-          @click="updatePost(post)"
+          @click="updatePost(post.postId)"
           >수정</v-btn
         >
         <v-btn
           class="text-subtitle-1 font-weight-light px-0"
           text
           small
-          @click="deletePost(post)"
+          @click="deletePost(post.postId)"
           >삭제</v-btn
         >
       </div>
     </v-row>
     <v-row no-gutters class="my-5">
-      <tiptap-viewer id="post-content" :content="post.postContent" />
+      <tiptap-viewer id="post-content" :content="post.content" />
     </v-row>
     <v-row v-if="isLoggedIn" no-gutters class="mt-3">
       <v-textarea
