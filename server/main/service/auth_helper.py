@@ -10,7 +10,7 @@ class Auth:
         if auth_token:
             try:
                 # 파이어베이스에서 유저정보인증 확인
-                user = auth.verify_id_token(auth_token.replace("Bearer ",""))
+                user = auth.verify_id_token(auth_token)
                 response_object = {
                     'status': 'success',
                     'message': '성공적으로 인증되었습니다',

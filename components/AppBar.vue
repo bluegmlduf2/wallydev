@@ -145,6 +145,8 @@ export default {
     },
     async logout() {
       await this.$fire.auth.signOut()
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
       this.isOpen = true
       this.dialogMessage = message.bye
     },

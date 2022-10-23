@@ -3,11 +3,12 @@ import Vue from "vue";
 
 export default function ({ $axios, store }) {  
   $axios.onRequest((config) => {
-    // const token = localStorage.getItem(cookieAuthKey) || ''
-    // if (token) {
-    //   config.headers.Authorization = token
-    // }
-    // return config
+    // 파이어베이스 로그인 토큰정보를 서버에 전달
+    const token = localStorage.getItem('access_token') || ''
+    if (token) {
+      config.headers.Authorization = token
+    }
+    return config
   })
 
   // $axios.onResponseError(async (err) => {
