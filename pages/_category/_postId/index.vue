@@ -1,10 +1,12 @@
 <template>
-  <v-container class="pa-md-10 pa-lg-10">
+  <v-container v-if="post" class="pa-md-10 pa-lg-10">
     <v-row no-gutters>
       <span class="text-h3 font-weight-bold">{{ post.title }}</span>
     </v-row>
     <v-row class="my-3 mx-1" align="center">
-      <span class="text-subtitle-1 font-weight-light">{{ post.createdDate }}</span>
+      <span class="text-subtitle-1 font-weight-light">{{
+        post.createdDate
+      }}</span>
       <span class="text-subtitle-1 font-weight-light ml-2"
         >조회수 {{ post.postViewCount }}</span
       >
@@ -114,15 +116,15 @@ export default {
   components: {
     TiptapViewer,
   },
-  async asyncData({ params, store }) {
-    const postId = params.postId
-    await store.dispatch('getPost', postId)
-  },
   data() {
     return {
       isOpen: false,
       dialogMessage: '',
     }
+  },
+  async fetch() {
+    const postId = this.$route.params.postId
+    await this.$store.dispatch('getPost', postId)
   },
   computed: {
     post() {

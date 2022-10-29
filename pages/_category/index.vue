@@ -1,7 +1,14 @@
 <template>
-  <v-container>
+  <v-container v-if="!!postList">
     <v-row class="mb-6" justify="start">
-      <v-col v-for="e in postList" :key="e.postId" cols="12" sm="6" md="4" lg="3">
+      <v-col
+        v-for="e in postList"
+        :key="e.postId"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
         <v-card max-width="344" class="hover-up">
           <v-img :src="e.imageUrl" height="200px"></v-img>
           <v-card-title> {{ e.title }} </v-card-title>
@@ -24,22 +31,25 @@
 <script>
 export default {
   name: 'IndexCategory',
-  async asyncData({ params, store }) {
-    const category = params.category
-    await store.dispatch('getPostList', { category, page: 1 })
-    return { category }
-  },
   data() {
     return {
       category: '',
       page: 1,
     }
   },
+  async fetch() {
+    this.category = this.$route.params.category
+    await this.$store.dispatch('getPostList', {
+      category: this.category,
+      page: 1,
+    })
+  },
   computed: {
     postList() {
       return this.$store.getters.postList
     },
   },
+  fetchOnServer: false, // fetch함수의 실행을 위해 이 화면의 경우는 서버에서 렌더링을 하지않고 클라이언트에서 한다
   methods: {
     scrolling($state) {
       // 스크롤이 페이지 하단에 위치해도 약간의 딜레이를 주고 데이터를 가져옴
