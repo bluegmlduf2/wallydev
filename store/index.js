@@ -1,5 +1,6 @@
 import PostApi from '~/api/PostApi'
 import PostListApi from '~/api/PostListApi'
+import CommentApi from '~/api/CommentApi'
 
 export const state = () => ({
   post: null,
@@ -10,6 +11,9 @@ export const state = () => ({
 export const mutations = {
   SET_POST: (state, payload) => {
     state.post = payload
+  },
+  POST_CLEAR: (state) => {
+    state.post = null
   },
   SET_POST_LIST: (state, payload) => {
     state.postList = payload
@@ -115,6 +119,7 @@ export const actions = {
 
   async getPost({ commit }, payload) {
     // 게시물 상세 정보 취득
+    commit('POST_CLEAR')
     return await new PostApi()
       .getPost(payload)
       .then((response) => {
@@ -128,13 +133,16 @@ export const actions = {
 
   async createPost({ commit }, payload) {
     // 게시물 등록
-    return await new PostApi()
-      .createPost(payload)
-      .then((response) => {
-        const data = { ...response.data }
-        // 작성한 게시물로 이동
-        this.$router.push(`${data.category}/${data.postId}`)
-      })
+    return await new PostApi().createPost(payload).then((response) => {
+      const data = { ...response.data }
+      // 작성한 게시물로 이동
+      this.$router.push(`${data.category}/${data.postId}`)
+    })
+  },
+
+  async createComment({ commit }, payload) {
+    // 댓글 등록
+    return await new CommentApi().createComment(payload)
   },
 }
 

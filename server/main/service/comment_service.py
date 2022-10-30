@@ -20,25 +20,17 @@ def get_comment(uid,postId):
     return comment
 
 
-def create_comment(uid,param):
+def create_comment(uid,payload):
     '''댓글 등록'''
     try:
-        # 필수 입력정보가 전부 입력되어있는지 확인
-        if not param['commentContent']:
-            raise UserError(701,'필수항목')
-
-        # 댓글의 입력글자수 체크
-        if len(param['commentContent'])>1000:
-            raise UserError(706,'1000')
-
         user=User.query.filter_by(uid=uid).first()
-        # 기존 유저가 존재할 경우 유저선택정보를 갱신
+        # 기존 유저가 존재하는 경우
         if user:
             comment = Comment()
-            comment.commentContent = param['commentContent']
-            comment.postIdRef = param['postId']
-            comment.commentUid = uid
-
+            comment.postIdRef = payload['postId']
+            comment.commentContent = payload['commentContent']
+            comment.writerUid = user.uid
+        
             db.session.add(comment)
             db.session.commit()
                         

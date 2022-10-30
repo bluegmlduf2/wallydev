@@ -33,6 +33,7 @@
     </v-row>
     <v-row v-if="isLoggedIn" no-gutters class="mt-3">
       <v-textarea
+        v-model="commentContent"
         solo
         no-resize
         hide-details
@@ -102,6 +103,7 @@
     <Alert
       :is-open="isOpen"
       :dialog-message="dialogMessage"
+      :dialog-type="dialogType"
       @closeDialog="isOpen = false"
     />
   </v-container>
@@ -120,6 +122,8 @@ export default {
     return {
       isOpen: false,
       dialogMessage: '',
+      dialogType: '',
+      commentContent: '',
     }
   },
   async fetch() {
@@ -138,9 +142,37 @@ export default {
     },
   },
   methods: {
-    writeComment() {
-      this.isOpen = true
-      this.dialogMessage = message.registerComment
+    async writeComment() {
+      // 작성한 댓글의 정보
+      const param = {
+        postId: this.post.postId,
+        commentContent: this.commentContent,
+      }
+
+      // 화면에서 유효성 체크
+      if (!param.commentContent) {
+        this.isOpen = true
+        this.dialogType = 'error'
+        this.dialogMessage = message.inputAll
+        return
+      }
+      // 댓글을 등록
+      await this.$store
+        .dispatch('createComment', param)
+        .then((response) => {
+          // 댓글등록확인
+          this.isOpen = true
+          this.dialogType = 'info'
+          this.dialogMessage = response.message
+          this.commentContent = ''
+          this.$fetch() // 댓글 정보 초기화
+        })
+        .catch((e) => {
+          // 서버에서 에러가 발생했을때
+          this.isOpen = true
+          this.dialogType = 'error'
+          this.dialogMessage = e.message
+        })
     },
     updatePost(post) {
       this.$router.push({ name: 'write', params: { post } })
