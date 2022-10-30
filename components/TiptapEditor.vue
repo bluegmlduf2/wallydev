@@ -106,21 +106,42 @@
       </button>
       <button @click="addImage">image</button>
     </div>
-    <v-text-field
-      clear-icon="title"
-      class="mt-2 title"
-      dense
-      solo
-      hide-details
-      :value="title"
-      placeholder="제목을 입력해주세요"
-    />
+    <v-row>
+      <v-col cols="8">
+        <v-text-field
+          v-model="title"
+          clear-icon="title"
+          class="mt-2 title"
+          dense
+          solo
+          hide-details="auto"
+          placeholder="제목을 입력해주세요"
+        />
+      </v-col>
+      <v-col cols="4">
+        <v-select
+          v-model="selectedItem"
+          class="mt-2 category"
+          :items="categoryItems"
+          dense
+          solo
+          hide-details="auto"
+          placeholder="카테고리를 선택해주세요"
+        ></v-select>
+      </v-col>
+    </v-row>
     <editor-content class="content" :editor="editor" spellcheck="false" />
     <div class="d-flex mt-3">
       <v-btn class="text-subtitle-1" @click="$router.go(-1)">뒤로</v-btn>
       <v-spacer />
       <v-btn class="text-subtitle-1" @click="onClickWrite">작성</v-btn>
     </div>
+    <Alert
+      :is-open="isOpen"
+      :dialog-message="dialogMessage"
+      dialog-type="error"
+      @closeDialog="isOpen = false"
+    />
   </div>
 </template>
 
@@ -128,6 +149,7 @@
 import { Editor, EditorContent } from '@tiptap/vue-2'
 import { StarterKit } from '@tiptap/starter-kit'
 import { Image } from '@tiptap/extension-image'
+import message from '~/assets/js/message'
 
 export default {
   components: {
@@ -137,8 +159,12 @@ export default {
   middleware: ['auth', 'check-admin'],
   data() {
     return {
+      isOpen: false,
+      dialogMessage: '',
       title: this.$route.params?.post ? this.$route.params.post.title : '',
       editor: null,
+      categoryItems: ['today', 'food', 'javascript', 'vuejs'],
+      selectedItem: 'today',
     }
   },
   mounted() {
@@ -161,9 +187,25 @@ export default {
   },
 
   methods: {
-    onClickWrite() {
-      const writtenHtml = this.editor.getHTML()
-      console.log(writtenHtml)
+    async onClickWrite() {
+      // 작성한 글의 정보
+      const param = {
+        title: this.title,
+        category: this.selectedItem,
+        content: this.editor.getHTML(),
+      }
+      // 화면에서 유효성 체크
+      if (!param.title && !param.content) {
+        this.isOpen = true
+        this.dialogMessage = message.inputAll
+        return
+      }
+      // 글을 등록
+      await this.$store.dispatch('createPost', param).catch((e) => {
+        // 서버에서 에러가 발생했을때
+        this.isOpen = true
+        this.dialogMessage = e.message
+      })
     },
     addImage() {
       const url = window.prompt('URL')
@@ -183,7 +225,8 @@ export default {
   border-radius: 0.5rem;
 }
 
-.title {
+.title,
+.category {
   border: 1px solid black !important;
   border-radius: 0.5rem;
 }

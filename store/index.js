@@ -125,6 +125,17 @@ export const actions = {
         console.warn(e)
       })
   },
+
+  async createPost({ commit }, payload) {
+    // 게시물 등록
+    return await new PostApi()
+      .createPost(payload)
+      .then((response) => {
+        const data = { ...response.data }
+        // 작성한 게시물로 이동
+        this.$router.push(`${data.category}/${data.postId}`)
+      })
+  },
 }
 
 export const getters = {

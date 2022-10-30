@@ -19,6 +19,7 @@ class PostDto:
         'writerUserName': fields.String(description='게시물 작성자 명'),
         'title': fields.String(description='게시물 제목'),
         'content': fields.String(description='게시물 내용'),
+        'category': fields.String(description='게시물의 종류'),
         'postViewCount': fields.Integer(description='조회수'),
         'createdDate': fields.Date(description='등록날짜'),
         'updatedDate': fields.Date(description='수정날짜'),
