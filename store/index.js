@@ -144,6 +144,16 @@ export const actions = {
     // 댓글 등록
     return await new CommentApi().createComment(payload)
   },
+
+  async updateComment({ commit }, payload) {
+    // 댓글 수정
+    return await new CommentApi().updateComment(payload)
+  },
+
+  async deleteComment({ commit }, payload) {
+    // 댓글 삭제
+    return await new CommentApi().deleteComment(payload)
+  },
 }
 
 export const getters = {

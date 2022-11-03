@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue'
 class BaseApi {
   /**
    * The constructor of the BaseApi.
@@ -128,15 +128,12 @@ class BaseApi {
   /**
    * 데이터 수정
    *
-   * @param {int}    id   The given identifier.
    * @param {Object} item The given item.
    *
    * @returns {Promise} The result in a promise.
    */
-  update(id, item) {
-    // id가 존재하면 해당 id를 url에 넣고 없으면 id를 파라미터에 넣어서 보낸다
-    const url = id ? `/${this.endpoint}/${id}` : `/${this.endpoint}`
-    return this.submit('put', url, item)
+  update(item) {
+    return this.submit('put', `/${this.endpoint}`, item)
   }
 
   /**
@@ -163,7 +160,7 @@ class BaseApi {
    *
    * @returns {Promise} The result in a promise.
    */
-  destroy(id) {
+  delete(id) {
     return this.submit('delete', `/${this.endpoint}/${id}`)
   }
 

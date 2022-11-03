@@ -19,6 +19,24 @@ class CommentApi extends BaseApi {
   createComment(param) {
     return this.create(param)
   }
+
+  /**
+   * 댓글 수정
+   *
+   * @returns {Promise} The result in a promise.
+   */
+  updateComment(param) {
+    return this.update(param)
+  }
+
+  /**
+   * 댓글 삭제
+   *
+   * @returns {Promise} The result in a promise.
+   */
+  deleteComment(param) {
+    return this.delete(param)
+  }
 }
 
 export default CommentApi

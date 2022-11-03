@@ -49,7 +49,7 @@
       <v-card
         v-for="item in post.comment"
         :key="item.commentId"
-        class="mx-3 my-2 card-no-border"
+        class="mx-3 my-2 card-no-border comment-wrapper"
         width="100%"
         outlined
       >
@@ -80,7 +80,7 @@
             @click="
               item.isUpdated
                 ? changeCommentOpen(item, false)
-                : updateComment(item)
+                : updateComment(item, $event)
             "
           >
             {{ item.isUpdated ? '수정' : '저장' }}
@@ -142,6 +142,12 @@ export default {
     },
   },
   methods: {
+    updatePost(post) {
+      this.$router.push({ name: 'write', params: { post } })
+    },
+    deletePost(post) {
+      alert(3)
+    },
     async writeComment() {
       // 작성한 댓글의 정보
       const param = {
@@ -174,18 +180,59 @@ export default {
           this.dialogMessage = e.message
         })
     },
-    updatePost(post) {
-      this.$router.push({ name: 'write', params: { post } })
+    async updateComment(comment, $event) {
+      // 수정한 댓글의 정보
+      const param = {
+        commentId: comment.commentId,
+        commentContent: $event.target
+          .closest('.comment-wrapper')
+          .querySelector('.comment-content textarea').value,
+      }
+
+      // 화면에서 유효성 체크
+      if (!param.commentContent) {
+        this.isOpen = true
+        this.dialogType = 'error'
+        this.dialogMessage = message.inputAll
+        return
+      }
+
+      // 댓글을 수정
+      await this.$store
+        .dispatch('updateComment', param)
+        .then((response) => {
+          // 댓글등록확인
+          this.isOpen = true
+          this.dialogType = 'info'
+          this.dialogMessage = response.message
+          this.commentContent = ''
+          this.$fetch() // 댓글 정보 초기화
+        })
+        .catch((e) => {
+          // 서버에서 에러가 발생했을때
+          this.isOpen = true
+          this.dialogType = 'error'
+          this.dialogMessage = e.message
+        })
     },
-    deletePost(post) {
-      alert(3)
-    },
-    updateComment(comment) {
-      this.changeCommentOpen(comment, true)
-      alert(2)
-    },
-    deleteComment(comment) {
-      alert(3)
+    async deleteComment(comment) {
+      // 댓글을 삭제
+      await this.$store
+        .dispatch('deleteComment', comment.commentId)
+        .then((response) => {
+          // 댓글삭제확인
+          this.isOpen = true
+          this.dialogType = 'info'
+          this.dialogMessage = response.message
+          this.commentContent = ''
+          this.$fetch() // 댓글 정보 초기화
+        })
+        .catch((e) => {
+          // 서버에서 에러가 발생했을때
+          this.isOpen = true
+          this.dialogType = 'error'
+          this.dialogMessage = e.message
+        })
     },
     changeCommentOpen(comment, isActive) {
       this.$store.commit('SET_COMMENT_OPEN', {

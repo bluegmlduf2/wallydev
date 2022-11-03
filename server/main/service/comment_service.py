@@ -44,26 +44,18 @@ def create_comment(uid,payload):
         raise UserError(703,'등록된 댓글')
 
 
-def update_comment(uid,param):
+def update_comment(uid,payload):
     '''댓글 수정'''
     try:
-        # 필수 입력정보가 전부 입력되어있는지 확인
-        if not param['commentContent'] or not param['commentId']:
-            raise UserError(701,'필수항목')
-
-        # 댓글의 입력글자수 체크
-        if len(param['commentContent'])>1000:
-            raise UserError(706,'1000')
-
         user=User.query.filter_by(uid=uid).first()
         # 기존 유저가 존재할 경우 유저선택정보를 갱신
         if user:
-            comment = Comment.query.filter_by(commentUid=uid, commentId=param['commentId']).first()
+            comment = Comment.query.filter_by(writerUid=uid, commentId=payload['commentId']).first()
             # 댓글존재여부체크
             if not comment:
                 raise UserError(702,'댓글')
 
-            comment.commentContent = param['commentContent']
+            comment.commentContent = payload['commentContent']
 
             db.session.add(comment)
             db.session.commit()
@@ -81,14 +73,11 @@ def update_comment(uid,param):
 def destroy_comment(uid,commentId):
     '''댓글 삭제'''
     try:
-        # 필수 입력정보가 전부 입력되어있는지 확인
-        if not commentId:
-            raise UserError(701,'필수항목')
 
         user=User.query.filter_by(uid=uid).first()
         # 기존 유저가 존재할 경우 유저선택정보를 갱신
         if user:
-            Comment.query.filter_by(commentUid=uid, commentId=commentId).delete()
+            Comment.query.filter_by(writerUid=uid, commentId=commentId).delete()
 
             db.session.commit()
                         
