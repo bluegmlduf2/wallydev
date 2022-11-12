@@ -8,7 +8,7 @@ class PostApi extends BaseApi {
    */
   constructor(parameters = {}) {
     // BaseApi.js의 부모의 constructor를 실행, 부모의 endpoint는 reclist사용
-    super('post', parameters)
+    super('api_wallydev/post', parameters)
   }
 
   /**

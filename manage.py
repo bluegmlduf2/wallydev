@@ -14,7 +14,7 @@ app.register_blueprint(blueprint) # 플라스크 app객체로 app폴더의 bluep
 app.app_context().push()
 
 # 해당 URL의 요청에 대해 CORS 허용
-CORS(app,origins=[os.getenv('SERVER_FRONT_URL')])
+# CORS(app,origins=[os.getenv('SERVER_FRONT_URL')])
 
 # flask_script사용 등록
 # 파이선 스크립트 실행 명령어등을 사용자 지정가능

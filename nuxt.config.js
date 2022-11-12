@@ -106,7 +106,14 @@ export default {
   },
 
   axios: {
-    baseURL: process.env.VUE_APP_API_URL,
+    // proxy사용시 baseURL사용불가 
+    // baseURL: process.env.VUE_APP_API_URL,
+    proxy: true 
+  },
+  proxy: {
+    // CORS 방지용 프론트(localhost:3000)->서버(localhost:5000)
+    // http://localhost:3000/api_wallydev -> http://localhost:5000/api_wallydev
+    '/api_wallydev': process.env.VUE_APP_API_URL,
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
