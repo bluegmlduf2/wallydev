@@ -18,7 +18,7 @@ class PostApi extends BaseApi {
    *
    * @returns {Promise} The result in a promise.
    */
-   getPost(postId) {
+  getPost(postId) {
     return this.find(postId)
   }
 

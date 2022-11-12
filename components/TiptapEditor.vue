@@ -177,6 +177,7 @@ export default {
       editor: null,
       categoryItems: ['today', 'food', 'javascript', 'vuejs'],
       selectedItem: 'today',
+      tempImages: [],
     }
   },
   computed: {
@@ -216,6 +217,7 @@ export default {
         title: this.title,
         category: this.selectedItem,
         content: this.editor.getHTML(),
+        tempImages: this.tempImages,
       }
       // 화면에서 유효성 체크
       if (!param.title && !param.content) {
@@ -264,12 +266,14 @@ export default {
         await this.$store
           .dispatch('uploadImage', formData)
           .then((response) => {
-            // 업로그한 임시이미지 표시
+            // 업로드한 임시이미지 표시
             this.editor
               .chain()
               .focus()
               .setImage({ src: response.data.imageUrl })
               .run()
+            // 임시이미지를 저장용 이미지로 변환하기 위해 추가
+            this.tempImages.push(response.data.imagefileName)
           })
           .catch((e) => {
             // 서버에서 에러가 발생했을때

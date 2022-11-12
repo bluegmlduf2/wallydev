@@ -34,19 +34,23 @@ def get_post(uid, postId):
 def get_post_list(payload):
     '''게시물 리스트 정보 취득'''
 
-    # 재검색시 사용하는 검색조건
-    filterSearchWord = get_filter_condition_by_searchtext(payload)
+    # 검색시 사용하는 검색조건
     page = int(payload['page'])
     limit = int(payload['limit'])
-    category = payload['category']
+    category = payload.get('category',False)
 
-    # 내 할일일정의 상세 정보 취득
-    postQuery = Post.query.filter_by(category=category).\
-        filter(filterSearchWord).\
-        order_by(Post.createdDate)
+    # 게시글 리스트 취득쿼리
+    if category:
+        postQuery = Post.query.filter_by(category=category).\
+            order_by(Post.createdDate)
+    else:
+        filterSearchWord = get_filter_condition_by_searchtext(payload)
+        postQuery = Post.query.\
+            filter(filterSearchWord).\
+            order_by(Post.createdDate)
 
     postList = postQuery.paginate(
-        page, limit, error_out=False).items  # 할일일정의 페이지네이션 된 값
+        page, limit, error_out=False).items  # 페이지네이션 된 값
 
     return postList
 
@@ -59,12 +63,12 @@ def create_post(uid, payload):
         # 등록된 유저가 있는지 확인
         if user:
             # 글내용의 이미지 url변경
-            # filteredContent = payload['content'].replace(
-            #     'api/image/temp/', 'api/image/post/')
-            # payload['content'] = filteredContent
+            filteredContent = payload['content'].replace(
+                'api/image/temp/', 'api/image/post/')
+            payload['content'] = filteredContent
 
             # # 게시글의 임시 이미지 파일을 저장용 폴더에 이동
-            # moveImageFile(payload['tempImages'])
+            moveImageFile(payload['tempImages'])
 
             # 등록할 게시물 정보입력
             post = Post()
@@ -101,7 +105,7 @@ def update_post(uid, payload):
             payload['content'] = filteredContent
 
             # 게시글의 임시 이미지 파일을 저장용 폴더에 이동
-            # moveImageFile(payload['tempImages'])
+            moveImageFile(payload['tempImages'])
 
             # 수정할 게시물 정보입력
             post = Post.query.filter_by(

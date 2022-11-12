@@ -19,7 +19,7 @@ class PostListApi extends BaseApi {
 
     // 검색어조건이 있는 경우와 없는 경우
     if (searchText) {
-      params.q = searchText
+      params.searchText = searchText
     } else {
       params.category = category
     }

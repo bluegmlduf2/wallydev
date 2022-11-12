@@ -16,7 +16,7 @@
             {{ e.content }}
           </v-card-subtitle>
           <v-card-actions class="d-flex justify-end">
-            <v-btn color="maincolor" text nuxt :to="`${category}/${e.postId}`">
+            <v-btn color="maincolor" text nuxt :to="`${e.category}/${e.postId}`">
               더보기
             </v-btn>
           </v-card-actions>

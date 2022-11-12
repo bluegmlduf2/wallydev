@@ -1,15 +1,27 @@
 <template>
-  <v-container>
+  <v-container v-if="!!postList">
     <v-row class="mb-6" justify="start">
-      <v-col v-for="e in post" :key="e.id" cols="12" sm="6" md="4" lg="3">
+      <v-col
+        v-for="e in postList"
+        :key="e.postId"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
+      >
         <v-card max-width="344" class="hover-up">
           <v-img :src="e.imageUrl" height="200px"></v-img>
           <v-card-title> {{ e.title }} </v-card-title>
           <v-card-subtitle class="subtitle-body text-overflow">
-            {{ e.postContent }}
+            {{ e.content }}
           </v-card-subtitle>
           <v-card-actions class="d-flex justify-end">
-            <v-btn color="maincolor" text nuxt :to="`${e.category}/${e.id}`">
+            <v-btn
+              color="maincolor"
+              text
+              nuxt
+              :to="`${e.category}/${e.postId}`"
+            >
               더보기
             </v-btn>
           </v-card-actions>
@@ -31,8 +43,8 @@ export default {
     }
   },
   computed: {
-    post() {
-      return this.$store.getters.post
+    postList() {
+      return this.$store.getters.postList
     },
   },
   watch: {

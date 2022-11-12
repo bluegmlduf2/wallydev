@@ -107,8 +107,5 @@ class PostList(Resource):
         if not payload.get('limit', False):
             raise UserError(701, '종료페이지')
 
-        if not payload.get('category', False):
-            raise UserError(701, '카테고리')
-
         # 게시물 리스트 취득
         return get_post_list(payload)
