@@ -115,6 +115,7 @@
           dense
           solo
           hide-details="auto"
+          spellcheck="false"
           placeholder="제목을 입력해주세요"
         />
       </v-col>

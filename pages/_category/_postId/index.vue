@@ -41,6 +41,7 @@
         rows="3"
         append-icon="mdi-arrow-left-bottom-bold"
         no
+        spellcheck="false"
         @click:append="writeComment"
       ></v-textarea>
     </v-row>
@@ -68,6 +69,7 @@
               rows="1"
               dense
               :auto-grow="true"
+              spellcheck="false"
               placeholder="댓글을 입력해주세요"
             />
           </v-list-item-content>
