@@ -147,12 +147,17 @@ export default {
     },
     async deletePost(postId) {
       // 게시글을 삭제
-      await this.$store.dispatch('deletePost', postId).catch((e) => {
-        // 서버에서 에러가 발생했을때
-        this.isOpen = true
-        this.dialogType = 'error'
-        this.dialogMessage = e.message
-      })
+      await this.$store
+        .dispatch('deletePost', postId)
+        .catch((e) => {
+          // 서버에서 에러가 발생했을때
+          this.isOpen = true
+          this.dialogType = 'error'
+          this.dialogMessage = e.message
+        })
+        .finally(() => {
+          this.$store.commit('SET_LOADING', false)
+        })
     },
     async writeComment() {
       // 작성한 댓글의 정보
@@ -184,6 +189,9 @@ export default {
           this.isOpen = true
           this.dialogType = 'error'
           this.dialogMessage = e.message
+        })
+        .finally(() => {
+          this.$store.commit('SET_LOADING', false)
         })
     },
     async updateComment(comment, $event) {
@@ -220,6 +228,9 @@ export default {
           this.dialogType = 'error'
           this.dialogMessage = e.message
         })
+        .finally(() => {
+          this.$store.commit('SET_LOADING', false)
+        })
     },
     async deleteComment(comment) {
       // 댓글을 삭제
@@ -238,6 +249,9 @@ export default {
           this.isOpen = true
           this.dialogType = 'error'
           this.dialogMessage = e.message
+        })
+        .finally(() => {
+          this.$store.commit('SET_LOADING', false)
         })
     },
     changeCommentOpen(comment, isActive) {

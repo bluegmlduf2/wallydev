@@ -6,6 +6,7 @@ import CommentApi from '~/api/CommentApi'
 export const state = () => ({
   post: null,
   postList: [],
+  isLoading: false,
   authUser: null,
 })
 
@@ -44,6 +45,9 @@ export const mutations = {
       photoURL: claims.picture,
       isAdmin: authUser.email === process.env.VUE_APP_ADMIN_EMAIL,
     }
+  },
+  SET_LOADING: (state, payload) => {
+    state.isLoading = payload
   },
 }
 
@@ -130,6 +134,7 @@ export const actions = {
   },
 
   async getPost({ commit }, payload) {
+    commit('SET_LOADING', true)
     // 게시물 상세 정보 취득
     commit('POST_CLEAR')
     return await new PostApi()
@@ -141,9 +146,13 @@ export const actions = {
       .catch((e) => {
         console.warn(e)
       })
+      .finally(() => {
+        commit('SET_LOADING', false)
+      })
   },
 
   async createPost({ commit }, payload) {
+    commit('SET_LOADING', true)
     // 게시물 등록
     return await new PostApi().createPost(payload).then((response) => {
       const data = { ...response.data }
@@ -153,6 +162,7 @@ export const actions = {
   },
 
   async updatePost({ commit }, payload) {
+    commit('SET_LOADING', true)
     // 게시물 수정
     return await new PostApi().updatePost(payload).then((response) => {
       const data = { ...response.data }
@@ -162,6 +172,7 @@ export const actions = {
   },
 
   async deletePost({ commit }, payload) {
+    commit('SET_LOADING', true)
     // 게시물 삭제
     return await new PostApi().deletePost(payload).then(() => {
       // 삭제후 홈화면으로 게시물로 이동
@@ -170,16 +181,19 @@ export const actions = {
   },
 
   async createComment({ commit }, payload) {
+    commit('SET_LOADING', true)
     // 댓글 등록
     return await new CommentApi().createComment(payload)
   },
 
   async updateComment({ commit }, payload) {
+    commit('SET_LOADING', true)
     // 댓글 수정
     return await new CommentApi().updateComment(payload)
   },
 
   async deleteComment({ commit }, payload) {
+    commit('SET_LOADING', true)
     // 댓글 삭제
     return await new CommentApi().deleteComment(payload)
   },
@@ -191,6 +205,9 @@ export const getters = {
   },
   postList(state) {
     return state.postList
+  },
+  isLoading(state) {
+    return state.isLoading
   },
   isLoggedIn: (state) => !!state?.authUser,
   isAdminIn: (state) => !!state?.authUser?.isAdmin,

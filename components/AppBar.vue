@@ -59,6 +59,15 @@
         </template>
       </v-treeview>
     </v-navigation-drawer>
+    <div class="progress-wrapper">
+      <v-progress-circular
+        v-if="isLoading"
+        :size="70"
+        :width="7"
+        color="maincolor"
+        indeterminate
+      ></v-progress-circular>
+    </div>
     <Alert
       :is-open="isOpen"
       :dialog-message="dialogMessage"
@@ -124,6 +133,9 @@ export default {
     isAdminIn() {
       return this.$store.getters?.isAdminIn
     },
+    isLoading() {
+      return this.$store.getters.isLoading
+    },
   },
   methods: {
     async signInWithGoogle() {
@@ -171,5 +183,14 @@ export default {
 <style scoped>
 .hover-text:hover {
   color: #41b883 !important;
+}
+/* 프로그레스바 중앙정렬 */
+.progress-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  margin: auto;
+  z-index: 1;
 }
 </style>

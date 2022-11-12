@@ -220,18 +220,28 @@ export default {
         // 수정할 게시글의 번호의 값을 초기화
         param.postId = this.$route.params.postId
         // 글을 수정
-        await this.$store.dispatch('updatePost', param).catch((e) => {
-          // 서버에서 에러가 발생했을때
-          this.isOpen = true
-          this.dialogMessage = e.message
-        })
+        await this.$store
+          .dispatch('updatePost', param)
+          .catch((e) => {
+            // 서버에서 에러가 발생했을때
+            this.isOpen = true
+            this.dialogMessage = e.message
+          })
+          .finally(() => {
+            this.$store.commit('SET_LOADING', false)
+          })
       } else {
         // 글을 등록
-        await this.$store.dispatch('createPost', param).catch((e) => {
-          // 서버에서 에러가 발생했을때
-          this.isOpen = true
-          this.dialogMessage = e.message
-        })
+        await this.$store
+          .dispatch('createPost', param)
+          .catch((e) => {
+            // 서버에서 에러가 발생했을때
+            this.isOpen = true
+            this.dialogMessage = e.message
+          })
+          .finally(() => {
+            this.$store.commit('SET_LOADING', false)
+          })
       }
     },
     addImage() {
