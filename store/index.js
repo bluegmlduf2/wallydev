@@ -1,5 +1,6 @@
 import sanitizeHtml from 'sanitize-html'
 import PostApi from '~/api/PostApi'
+import ImageApi from '~/api/ImageApi'
 import PostListApi from '~/api/PostListApi'
 import CommentApi from '~/api/CommentApi'
 
@@ -169,6 +170,13 @@ export const actions = {
       // 작성한 게시물로 이동
       this.$router.push(`${data.category}/${data.postId}`)
     })
+  },
+
+  // 게시물 이미지 등록
+  async uploadImage({ commit }, payload) {
+    commit('SET_LOADING', true)
+    // 게시물 이미지 정보 등록
+    return await new ImageApi().uploadImage(payload)
   },
 
   async deletePost({ commit }, payload) {

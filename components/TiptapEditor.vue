@@ -104,7 +104,14 @@
       >
         redo
       </button>
-      <button @click="addImage">image</button>
+      <button @click="openImage">image</button>
+      <input
+        ref="fileDialog"
+        type="file"
+        style="display: none"
+        accept="image/*"
+        @change="addImage"
+      />
     </div>
     <v-row>
       <v-col cols="8">
@@ -245,11 +252,33 @@ export default {
           })
       }
     },
-    addImage() {
-      const url = window.prompt('URL')
-
-      if (url) {
-        this.editor.chain().focus().setImage({ src: url }).run()
+    openImage() {
+      this.$refs.fileDialog.click()
+    },
+    async addImage($event) {
+      const file = $event.target.files[0]
+      if (file) {
+        const formData = new FormData()
+        formData.append('image', file)
+        // 파일등록 등록
+        await this.$store
+          .dispatch('uploadImage', formData)
+          .then((response) => {
+            // 업로그한 임시이미지 표시
+            this.editor
+              .chain()
+              .focus()
+              .setImage({ src: response.data.imageUrl })
+              .run()
+          })
+          .catch((e) => {
+            // 서버에서 에러가 발생했을때
+            this.isOpen = true
+            this.dialogMessage = e.message
+          })
+          .finally(() => {
+            this.$store.commit('SET_LOADING', false)
+          })
       }
     },
   },
