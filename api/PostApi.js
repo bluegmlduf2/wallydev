@@ -37,7 +37,16 @@ class PostApi extends BaseApi {
    * @returns {Promise} The result in a promise.
    */
   updatePost(param) {
-    return this.update(null, param)
+    return this.update(param)
+  }
+
+  /**
+   * 게시물 삭제
+   *
+   * @returns {Promise} The result in a promise.
+   */
+  deletePost(param) {
+    return this.delete(param)
   }
 }
 

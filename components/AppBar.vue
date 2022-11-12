@@ -137,6 +137,8 @@ export default {
               'refresh_token',
               res.user.refreshToken.toString()
             )
+            // 현재페이지 새로고침(해당 페이지 데이터 초기화용)
+            location.reload()
           })
           this.isOpen = true
           this.dialogMessage = message.welcome
@@ -145,8 +147,8 @@ export default {
     },
     async logout() {
       await this.$fire.auth.signOut()
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
       this.isOpen = true
       this.dialogMessage = message.bye
     },

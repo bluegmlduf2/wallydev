@@ -145,8 +145,14 @@ export default {
     updatePost(post) {
       this.$router.push({ name: 'write', params: { post } })
     },
-    deletePost(post) {
-      alert(3)
+    async deletePost(post) {
+      // 게시글을 삭제
+      await this.$store.dispatch('deletePost', post).catch((e) => {
+        // 서버에서 에러가 발생했을때
+        this.isOpen = true
+        this.dialogType = 'error'
+        this.dialogMessage = e.message
+      })
     },
     async writeComment() {
       // 작성한 댓글의 정보

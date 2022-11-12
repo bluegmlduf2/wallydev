@@ -1,6 +1,6 @@
 from . import *
 from server.main.util.dto import PostDto
-from server.main.service.post_service import get_post, get_post_list, create_post, update_post
+from server.main.service.post_service import get_post, get_post_list, create_post, update_post, delete_post
 
 api = PostDto.api
 _post = PostDto.post
@@ -60,6 +60,17 @@ class Post(Resource):
         """게시물 정보를 수정"""
         payload = request.json
         return update_post(uid, param)
+
+    @token_required
+    @exception_handler
+    @api.doc('게시물 삭제')
+    @api.marshal_list_with(_post, envelope='data')
+    def delete(uid, self, param):
+        # 필수 입력정보가 전부 입력되어있는지 확인
+        if not param:
+            raise UserError(701, '필수항목')
+        """게시물 정보를 삭제"""
+        return delete_post(uid, param)
 
 
 @api.route('/postlist')

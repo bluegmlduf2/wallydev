@@ -140,6 +140,14 @@ export const actions = {
     })
   },
 
+  async deletePost({ commit }, payload) {
+    // 게시물 삭제
+    return await new PostApi().deletePost(payload).then(() => {
+      // 삭제후 홈화면으로 게시물로 이동
+      this.$router.push('/')
+    })
+  },
+
   async createComment({ commit }, payload) {
     // 댓글 등록
     return await new CommentApi().createComment(payload)
