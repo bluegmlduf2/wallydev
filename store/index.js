@@ -1,3 +1,4 @@
+import sanitizeHtml from 'sanitize-html'
 import PostApi from '~/api/PostApi'
 import PostListApi from '~/api/PostListApi'
 import CommentApi from '~/api/CommentApi'
@@ -102,12 +103,23 @@ export const actions = {
     return await new PostListApi()
       .getPostList(payload)
       .then((response) => {
+        // content의 불필요한 HTML을 제거, v-html사용은 xss에 취약
+        const responseData = response.data.map((e) => {
+          return {
+            ...e,
+            content: sanitizeHtml(e.content, {
+              // 어떤 태그들도 표시를 허용하지 않음
+              allowedTags: [],
+              allowedAttributes: {},
+            }),
+          }
+        })
         // 최초 게시물을 초기화시
         if (payload.page === 1) {
-          commit('SET_POST_LIST', response.data)
+          commit('SET_POST_LIST', responseData)
         } else if (payload.page > 1) {
           // 스크롤에 의해 게시물 더보기시
-          commit('ADD_POST_LIST', response.data)
+          commit('ADD_POST_LIST', responseData)
         }
         // 남은 게시글수 반환
         return response?.data.length || 0
