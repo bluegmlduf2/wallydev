@@ -53,13 +53,31 @@ class Post(Resource):
     @exception_handler
     @api.doc('게시물 수정')
     @api.marshal_list_with(_post, envelope='data')
-    def put(uid, self, param):
-        # 필수 입력정보가 전부 입력되어있는지 확인
-        if not param:
-            raise UserError(701, '필수항목')
+    def put(uid, self):
         """게시물 정보를 수정"""
+        # 필수 입력정보가 전부 입력되어있는지 확인
         payload = request.json
-        return update_post(uid, param)
+        if not payload['postId']:
+            raise UserError(702, '게시글')
+
+        if not payload['title']:
+            raise UserError(701, '타이틀')
+
+        # 제목의 입력글자수 체크 (3글자)
+        if len(payload['title']) > 35:
+            raise UserError(706, '35')
+
+        if not payload['category']:
+            raise UserError(701, '카테고리')
+
+        # 등록되지 않은 카테고리를 등록할 경우
+        if payload['category'] not in ['today', 'food', 'javascript', 'vuejs']:
+            raise UserError(704)
+
+        if not payload['content']:
+            raise UserError(701, '작성내용')
+
+        return update_post(uid, payload)
 
     @token_required
     @exception_handler

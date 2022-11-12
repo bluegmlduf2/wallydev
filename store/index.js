@@ -152,6 +152,15 @@ export const actions = {
     })
   },
 
+  async updatePost({ commit }, payload) {
+    // 게시물 수정
+    return await new PostApi().updatePost(payload).then((response) => {
+      const data = { ...response.data }
+      // 작성한 게시물로 이동
+      this.$router.push(`${data.category}/${data.postId}`)
+    })
+  },
+
   async deletePost({ commit }, payload) {
     // 게시물 삭제
     return await new PostApi().deletePost(payload).then(() => {

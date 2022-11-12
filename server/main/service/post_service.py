@@ -93,75 +93,29 @@ def update_post(uid, payload):
     try:
         user = User.query.filter_by(uid=uid).first()
 
-        # 유저의 선택정보가 전부 입력되어있는지 확인
-        if not user.country or not user.stayStatus:
-            raise UserError(701, '유저의 국가/체류상태')
-
         # 기존 유저가 존재할 경우 유저선택정보를 갱신
         if user:
-            # 화면에서 입력한 데이터
-            inputData = payload['inputData']
-
-            # 필수 입력정보가 전부 입력되어있는지 확인
-            if (not inputData['postId']
-                or not inputData['startDate']
-                or not inputData['endDate']
-                or not inputData['title']
-                or not inputData['content']
-                or not inputData['country']
-                    or not inputData['stayStatus']):
-                raise UserError(701, '필수항목')
-
-            # 제목의 입력글자수 체크
-            if len(inputData['title']) > 35:
-                raise UserError(706, '35')
-
-            # 국가선택에 지정한 값이외에 다른 값을 입력한 경우
-            if inputData['country'] not in ['US', 'JP', 'CN']:
-                raise UserError(704)
-
-            # 체류상태에 지정한 값이외에 다른 값을 입력한 경우
-            if inputData['stayStatus'] not in ['0', '1', '2']:
-                raise UserError(704)
-
-            # 일정 시작일이 종료일보다 큰 경우
-            if inputData['startDate'] > inputData['endDate']:
-                raise UserError(705)
-
-            # 시간 데이터
-            startDate = datetime.strptime(
-                inputData['startDate'], '%Y-%m-%d')  # 일정시작일
-            endDate = datetime.strptime(
-                inputData['endDate'], '%Y-%m-%d')  # 일정종료일
-            currentDate = datetime.strptime(
-                get_current_time().strftime('%Y-%m-%d'), '%Y-%m-%d')  # 현재시간
-            # 나의 입국날짜 (만약존재하지 않을시 현재 날짜를 넣는다)
-            entryDate = currentDate if user.entryDate is None else datetime.strptime(
-                user.entryDate.strftime('%Y-%m-%d'), '%Y-%m-%d')
-            afterEntryDate = (currentDate-entryDate).days  # 내 입국후 경과 일수
-
             # 글내용의 이미지 url변경
-            filteredContent = inputData['content'].replace(
+            filteredContent = payload['content'].replace(
                 'api/image/temp/', 'api/image/post/')
-            inputData['content'] = filteredContent
+            payload['content'] = filteredContent
 
             # 게시글의 임시 이미지 파일을 저장용 폴더에 이동
-            moveImageFile(inputData['tempImages'])
+            # moveImageFile(payload['tempImages'])
 
             # 수정할 게시물 정보입력
             post = Post.query.filter_by(
-                writerUid=uid, postId=inputData['postId']).first()
+                writerUid=uid, postId=payload['postId']).first()
+
             # 게시물존재여부체크
             if not post:
                 raise UserError(702, '게시물')
 
-            post.title = inputData['title']
-            post.content = inputData['content']
-            post.country = inputData['country']
-            post.stayStatus = inputData['stayStatus']
-            post.afterEntryDate = afterEntryDate
-            post.startDate = startDate
-            post.endDate = endDate
+            post.title = payload['title']
+            post.content = payload['content']
+            post.category = payload['category']
+            post.updatedDate = datetime.strptime(
+                get_current_time().strftime('%Y-%m-%d'), '%Y-%m-%d')  # 현재시간
 
             db.session.add(post)
             db.session.commit()

@@ -134,7 +134,9 @@
     <div class="d-flex mt-3">
       <v-btn class="text-subtitle-1" @click="$router.go(-1)">뒤로</v-btn>
       <v-spacer />
-      <v-btn class="text-subtitle-1" @click="onClickWrite">작성</v-btn>
+      <v-btn class="text-subtitle-1" @click="onClickWrite">{{
+        isEdit ? '수정' : '등록'
+      }}</v-btn>
     </div>
     <Alert
       :is-open="isOpen"
@@ -160,18 +162,31 @@ export default {
   data() {
     return {
       isOpen: false,
+      isEdit: false,
       dialogMessage: '',
-      title: this.$route.params?.post ? this.$route.params.post.title : '',
+      title: '',
+      content: '',
       editor: null,
       categoryItems: ['today', 'food', 'javascript', 'vuejs'],
       selectedItem: 'today',
     }
   },
+  computed: {
+    post() {
+      return this.$store.getters.post
+    },
+  },
   mounted() {
+    // 수정모드에 따라 초기값 설정
+    if (this.$route.params?.postId) {
+      this.isEdit = true
+      this.title = this.post.title
+      this.content = this.post.content
+      this.selectedItem = this.post.category
+    }
+
     this.editor = new Editor({
-      content: this.$route.params?.post
-        ? this.$route.params.post.postContent
-        : '',
+      content: this.content,
       extensions: [
         StarterKit,
         Image.configure({
@@ -200,12 +215,24 @@ export default {
         this.dialogMessage = message.inputAll
         return
       }
-      // 글을 등록
-      await this.$store.dispatch('createPost', param).catch((e) => {
-        // 서버에서 에러가 발생했을때
-        this.isOpen = true
-        this.dialogMessage = e.message
-      })
+      // 게시글 수정/등록 여부에따라서 분기
+      if (this.isEdit) {
+        // 수정할 게시글의 번호의 값을 초기화
+        param.postId = this.$route.params.postId
+        // 글을 수정
+        await this.$store.dispatch('updatePost', param).catch((e) => {
+          // 서버에서 에러가 발생했을때
+          this.isOpen = true
+          this.dialogMessage = e.message
+        })
+      } else {
+        // 글을 등록
+        await this.$store.dispatch('createPost', param).catch((e) => {
+          // 서버에서 에러가 발생했을때
+          this.isOpen = true
+          this.dialogMessage = e.message
+        })
+      }
     },
     addImage() {
       const url = window.prompt('URL')

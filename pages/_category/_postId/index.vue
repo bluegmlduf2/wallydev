@@ -142,12 +142,12 @@ export default {
     },
   },
   methods: {
-    updatePost(post) {
-      this.$router.push({ name: 'write', params: { post } })
+    updatePost(postId) {
+      this.$router.push({ name: 'write', params: { postId } })
     },
-    async deletePost(post) {
+    async deletePost(postId) {
       // 게시글을 삭제
-      await this.$store.dispatch('deletePost', post).catch((e) => {
+      await this.$store.dispatch('deletePost', postId).catch((e) => {
         // 서버에서 에러가 발생했을때
         this.isOpen = true
         this.dialogType = 'error'
