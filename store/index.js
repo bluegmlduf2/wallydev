@@ -110,6 +110,14 @@ export const actions = {
       .then((response) => {
         // content의 불필요한 HTML을 제거, v-html사용은 xss에 취약
         const responseData = response.data.map((e) => {
+          // 게시글 리스트의 타이틀 이미지 추출부분
+          const imageSrc = e.content
+            .match(/<img [^>]*src="[^"]*"[^>]*>/gm)
+          let displayImage = null
+          if (imageSrc) {
+            displayImage = imageSrc.map(x => x.replace(/.*src="([^"]*)".*/, '$1'))[0];
+          }
+          // const displayImage = rawText.match(/src=([^]+)/);
           return {
             ...e,
             content: sanitizeHtml(e.content, {
@@ -117,6 +125,7 @@ export const actions = {
               allowedTags: [],
               allowedAttributes: {},
             }),
+            displayImage,
           }
         })
         // 최초 게시물을 초기화시
