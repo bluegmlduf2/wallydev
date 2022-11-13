@@ -209,4 +209,4 @@ log/logfile*
 log/logErrorfile*
 
 # sqllite->mysql 덤프파일은 커밋 제외
-server/main/*.sql
+# server/main/*.sql

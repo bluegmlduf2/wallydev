@@ -30,7 +30,10 @@ export default {
       },
       {
         name: 'og:image',
-        content: '/android-chrome-192x192.png',
+        content:
+          process.env.NODE_ENV === 'development'
+            ? '//android-chrome-192x192.png'
+            : '/wallydev//android-chrome-192x192.png',
       },
       {
         name: 'og:author',
@@ -38,7 +41,16 @@ export default {
       },
       { hid: 'robots', name: 'robots', content: 'ALL' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/x-icon',
+        href:
+          process.env.NODE_ENV === 'development'
+            ? '/favicon.ico'
+            : '/wallydev/favicon.ico',
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
