@@ -3,7 +3,9 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-
+  router: {
+    base: '/wallydev/', // github repository 이름 넣기
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'WALLY DEV',
