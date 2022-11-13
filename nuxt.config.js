@@ -103,7 +103,10 @@ export default {
     icon: false,
 
     workbox: {
-      importScripts: ['/firebase-auth-sw.js'],
+      importScripts:
+        process.env.NODE_ENV === 'development'
+          ? ['/firebase-auth-sw.js']
+          : ['/wallydev/firebase-auth-sw.js'],
       dev: process.env.NODE_ENV === 'development',
     },
   },
