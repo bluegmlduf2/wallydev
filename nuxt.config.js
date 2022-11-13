@@ -32,8 +32,8 @@ export default {
         name: 'og:image',
         content:
           process.env.NODE_ENV === 'development'
-            ? '//android-chrome-192x192.png'
-            : '/wallydev//android-chrome-192x192.png',
+            ? '/android-chrome-192x192.png'
+            : '/wallydev/android-chrome-192x192.png',
       },
       {
         name: 'og:author',
@@ -47,7 +47,7 @@ export default {
         type: 'image/x-icon',
         href:
           process.env.NODE_ENV === 'development'
-            ? '/favicon.ico'
+            ? '/wallydev/favicon.ico'
             : '/wallydev/favicon.ico',
       },
     ],
@@ -117,7 +117,7 @@ export default {
     workbox: {
       importScripts:
         process.env.NODE_ENV === 'development'
-          ? ['/firebase-auth-sw.js']
+          ? ['/wallydev/firebase-auth-sw.js']
           : ['/wallydev/firebase-auth-sw.js'],
       dev: process.env.NODE_ENV === 'development',
     },
@@ -148,8 +148,8 @@ export default {
     proxy: true,
   },
   proxy: {
-    // CORS 방지용 프론트(localhost:3000)->서버(localhost:5000)
-    // http://localhost:3000/api_wallydev -> http://localhost:5000/api_wallydev
+    // CORS 방지용 프론트(localhost:3000)->서버(localhost:5001)
+    // http://localhost:3000/api_wallydev -> http://localhost:5001/api_wallydev
     '/api_wallydev': process.env.VUE_APP_API_URL,
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build

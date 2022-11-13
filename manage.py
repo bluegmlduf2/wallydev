@@ -29,7 +29,7 @@ manager.add_command('db', MigrateCommand)
 @manager.command
 def run():
     # 플라스크 앱 기동
-    app.run()
+    app.run(port=5001)
 
 
 @manager.command
