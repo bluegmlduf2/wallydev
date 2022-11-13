@@ -13,8 +13,28 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
+      {
+        hid: 'description',
+        name: 'og:description',
+        content: 'Wally의 후쿠오카 생활과 개발이야기를 담고 있습니다',
+      },
+      {
+        name: 'og:title',
+        content: 'Wally Dev',
+      },
+      {
+        name: 'og:keywords',
+        content: '후쿠오카,맛집,생활,일본생활,일본,개발,코딩,일본취업',
+      },
+      {
+        name: 'og:image',
+        content: '/android-chrome-192x192.png',
+      },
+      {
+        name: 'og:author',
+        content: 'Wally',
+      },
+      { hid: 'robots', name: 'robots', content: 'ALL' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
@@ -106,9 +126,9 @@ export default {
   },
 
   axios: {
-    // proxy사용시 baseURL사용불가 
+    // proxy사용시 baseURL사용불가
     // baseURL: process.env.VUE_APP_API_URL,
-    proxy: true 
+    proxy: true,
   },
   proxy: {
     // CORS 방지용 프론트(localhost:3000)->서버(localhost:5000)

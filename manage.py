@@ -3,7 +3,7 @@ import unittest
 
 from flask_migrate import Migrate, MigrateCommand # 테이블을 생성하고 컬럼을 추가하는 등의 작업을 할 수 있게 해주는 Flask-Migrate 라이브러리
 from flask_script import Manager
-from flask_cors import CORS
+# from flask_cors import CORS
 
 from server import blueprint
 from server.main import create_app, db
