@@ -64,7 +64,7 @@ def create_post(uid, payload):
         if user:
             # 글내용의 이미지 url변경
             filteredContent = payload['content'].replace(
-                'api/image/temp/', 'api/image/post/')
+                'api_wallydev/image/temp/', 'api_wallydev/image/post/')
             payload['content'] = filteredContent
 
             # # 게시글의 임시 이미지 파일을 저장용 폴더에 이동
@@ -101,7 +101,7 @@ def update_post(uid, payload):
         if user:
             # 글내용의 이미지 url변경
             filteredContent = payload['content'].replace(
-                'api/image/temp/', 'api/image/post/')
+                'api_wallydev/image/temp/', 'api_wallydev/image/post/')
             payload['content'] = filteredContent
 
             # 게시글의 임시 이미지 파일을 저장용 폴더에 이동
