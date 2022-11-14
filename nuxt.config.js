@@ -109,7 +109,8 @@ export default {
     icon: false,
 
     workbox: {
-      importScripts: ['/wallydev/firebase-auth-sw.js'],
+      // importScripts: ['/wallydev/firebase-auth-sw.js'],
+      importScripts: ['/firebase-auth-sw.js'],
       dev: process.env.NODE_ENV === 'development',
     },
   },
