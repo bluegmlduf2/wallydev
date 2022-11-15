@@ -44,7 +44,7 @@ export const mutations = {
       emailVerified: authUser.emailVerified,
       displayName: authUser.displayName,
       photoURL: claims.picture,
-      isAdmin: authUser.email === process.env.VUE_APP_ADMIN_EMAIL,
+      isAdmin: authUser.email === "bluegmlduf2@gmail.com",
     }
   },
   SET_LOADING: (state, payload) => {
