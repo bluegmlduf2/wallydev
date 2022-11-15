@@ -6,7 +6,7 @@ export default {
   // static : npm run generate 시 dist에 웹서버 배포용 파일생성
   target: 'server',
   router: {
-    base: '/wallydev/', // github repository 이름 넣기
+    // base: '/wallydev/', // github repository 이름 넣기
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -32,7 +32,7 @@ export default {
       },
       {
         name: 'og:image',
-        content: '/wallydev/android-chrome-192x192.png',
+        content: '/android-chrome-192x192.png',
       },
       {
         name: 'og:author',
@@ -44,7 +44,7 @@ export default {
       {
         rel: 'icon',
         type: 'image/x-icon',
-        href: '/wallydev/favicon.ico',
+        href: '/favicon.ico',
       },
     ],
   },
@@ -111,7 +111,7 @@ export default {
     icon: true,
 
     workbox: {
-      importScripts: ['/wallydev/firebase-auth-sw.js'],
+      importScripts: ['/firebase-auth-sw.js'],
       dev: process.env.NODE_ENV === 'development',
     },
   },
