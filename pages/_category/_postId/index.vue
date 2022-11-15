@@ -1,5 +1,5 @@
 <template>
-  <v-container v-if="post" class="pa-md-10 pa-lg-10">
+  <v-container v-if="post" class="pa-0 pa-md-10 pa-lg-10">
     <v-row no-gutters>
       <span class="text-h3 font-weight-bold">{{ post.title }}</span>
     </v-row>

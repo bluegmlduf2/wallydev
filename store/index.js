@@ -69,13 +69,6 @@ export const actions = {
     if (ctx.res && ctx.res.locals && ctx.res.locals.user) {
       const { allClaims: claims, ...authUser } = ctx.res.locals.user
 
-      // console.info(
-      //   'Auth User verified on server-side. User: ',
-      //   authUser,
-      //   'Claims:',
-      //   claims
-      // )
-
       await dispatch('onAuthStateChanged', {
         authUser,
         claims,
@@ -90,15 +83,6 @@ export const actions = {
       commit('RESET_STORE')
       return
     }
-
-    // if (authUser && claims) {
-    //   try {
-    //     // ログインしたらページ遷移します
-    //     await this.$router.push('/')
-    //   } catch (e) {
-    //     console.error(e)
-    //   }
-    // }
 
     commit('SET_USER', { authUser, claims })
   },
