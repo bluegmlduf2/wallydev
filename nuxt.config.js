@@ -2,7 +2,9 @@ import colors from 'vuetify/es5/util/colors'
 
 export default {
   // Target: https://go.nuxtjs.dev/config-target
-  target: 'static',
+  // server : npm run build 시 dist에 nodejs배포용 파일생성
+  // static : npm run generate 시 dist에 웹서버 배포용 파일생성
+  target: 'server',
   router: {
     base: '/wallydev/', // github repository 이름 넣기
   },
@@ -105,8 +107,8 @@ export default {
     manifest: {
       lang: 'en',
     },
-    meta: false,
-    icon: false,
+    meta: true,
+    icon: true,
 
     workbox: {
       importScripts: ['/wallydev/firebase-auth-sw.js'],
