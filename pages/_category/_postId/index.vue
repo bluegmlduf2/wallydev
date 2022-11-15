@@ -45,7 +45,7 @@
         @click:append="writeComment"
       ></v-textarea>
     </v-row>
-    <v-divider v-if="post.length > 0" class="my-7"></v-divider>
+    <v-divider v-if="!!post.comment?.length" class="my-7"></v-divider>
     <v-row>
       <v-card
         v-for="item in post.comment"
