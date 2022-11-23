@@ -39,6 +39,16 @@ export default {
         content: 'Wally',
       },
       { hid: 'robots', name: 'robots', content: 'ALL' },
+      // 구글 서치 콘솔
+      {
+        name: 'google-site-verification',
+        content: 'jyWqNfrNq98uEroX3_gsnn7tKNyDhmtapNVrOTz2Vtw',
+      },
+      // 네이버 서치 콘솔
+      {
+        name: 'naver-site-verification',
+        content: 'cf1f52b6aaaab6696ba5951f7d138112d5c40c60',
+      },
     ],
     link: [
       {
