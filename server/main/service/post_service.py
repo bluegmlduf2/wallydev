@@ -42,12 +42,12 @@ def get_post_list(payload):
     # 게시글 리스트 취득쿼리
     if category:
         postQuery = Post.query.filter_by(category=category).\
-            order_by(Post.createdDate)
+            order_by(desc(Post.createdDate))
     else:
         filterSearchWord = get_filter_condition_by_searchtext(payload)
         postQuery = Post.query.\
             filter(filterSearchWord).\
-            order_by(Post.createdDate)
+            order_by(desc(Post.createdDate))
 
     postList = postQuery.paginate(
         page, limit, error_out=False).items  # 페이지네이션 된 값

@@ -10,7 +10,7 @@
         lg="3"
       >
         <v-card max-width="344" class="hover-up">
-          <v-img :src="e.imageUrl" height="200px"></v-img>
+          <v-img :src="e.displayImage" height="200px"></v-img>
           <v-card-title> {{ e.title }} </v-card-title>
           <v-card-subtitle class="subtitle-body text-overflow">
             {{ e.content }}

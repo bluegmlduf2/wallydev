@@ -144,8 +144,8 @@ export default {
         .signInWithPopup(provider)
         .then((res) => {
           res.user.getIdToken(true).then((idToken) => {
-            localStorage.setItem('access_token', idToken.toString())
-            localStorage.setItem(
+            sessionStorage.setItem('access_token', idToken.toString())
+            sessionStorage.setItem(
               'refresh_token',
               res.user.refreshToken.toString()
             )
@@ -159,8 +159,8 @@ export default {
     },
     async logout() {
       await this.$fire.auth.signOut()
-      localStorage.removeItem('access_token')
-      localStorage.removeItem('refresh_token')
+      sessionStorage.removeItem('access_token')
+      sessionStorage.removeItem('refresh_token')
       this.isOpen = true
       this.dialogMessage = message.bye
     },

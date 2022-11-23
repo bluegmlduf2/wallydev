@@ -272,5 +272,6 @@ export default {
 /* 행간 */
 #post-content {
   line-height: 1.75rem;
+  width: 100%;
 }
 </style>
