@@ -42,7 +42,7 @@ export default {
       // 구글 서치 콘솔
       {
         name: 'google-site-verification',
-        content: 'jyWqNfrNq98uEroX3_gsnn7tKNyDhmtapNVrOTz2Vtw',
+        content: 'FGrZoZwm8h80cANDMM6JfvCYfI5CtTBZK3Ko6aR6ZIs',
       },
       // 네이버 서치 콘솔
       {
