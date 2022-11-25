@@ -121,6 +121,10 @@ export default {
               name: 'VueJs',
               to: '/vuejs',
             },
+            {
+              name: 'PHP',
+              to: '/php',
+            },
           ],
         },
       ],

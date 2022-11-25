@@ -175,7 +175,7 @@ export default {
       title: '',
       content: '',
       editor: null,
-      categoryItems: ['today', 'food', 'javascript', 'vuejs'],
+      categoryItems: ['today', 'food', 'javascript', 'vuejs','php'],
       selectedItem: 'today',
       tempImages: [],
     }
