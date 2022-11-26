@@ -17,27 +17,65 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      // 메타태그
       {
         hid: 'description',
+        name: 'description',
+        content: 'Wally의 후쿠오카 생활과 개발이야기를 담고 있습니다',
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content:
+          '후쿠오카 맛집,일본생활,일본,개발,코딩,일본취업,자바스크립트,PHP,VUE,JS',
+      },
+      {
+        hid: 'author',
+        name: 'author',
+        content: 'Wally',
+      },
+      // OG태그
+      {
+        hid: 'og:title',
+        name: 'og:title',
+        content: 'WALLY DEV',
+      },
+      {
+        hid: 'og:description',
         name: 'og:description',
         content: 'Wally의 후쿠오카 생활과 개발이야기를 담고 있습니다',
       },
       {
-        name: 'og:title',
-        content: 'Wally Dev',
+        hid: 'og:site_name',
+        name: 'og:site_name',
+        content: 'WALLY DEV - 코딩과 일본생활',
       },
       {
-        name: 'og:keywords',
-        content: '후쿠오카,맛집,생활,일본생활,일본,개발,코딩,일본취업',
+        hid: 'og:url',
+        name: 'og:url',
+        content: 'https://wallydev.herokuapp.com',
       },
       {
+        hid: 'og:locale',
+        name: 'og:locale',
+        content: 'ko_KR',
+      },
+      {
+        hid: 'og:image',
         name: 'og:image',
-        content: '/android-chrome-192x192.png',
+        content: 'https://wallydev.herokuapp.com/android-chrome-512x512.png',
       },
       {
-        name: 'og:author',
-        content: 'Wally',
+        hid: 'og:image:width',
+        name: 'og:image:width',
+        content: '512',
       },
+      {
+        hid: 'og:image:height',
+        name: 'og:image:height',
+        content: '512',
+      },
+      // 검색 크롤링 범위 설정
       { hid: 'robots', name: 'robots', content: 'ALL' },
       // 구글 서치 콘솔
       {
