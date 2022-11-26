@@ -11,12 +11,21 @@
       >
         <v-card max-width="344" class="hover-up">
           <v-img :src="e.displayImage" height="200px"></v-img>
-          <v-card-title> {{ e.title }} </v-card-title>
+          <v-card-title>
+            <div class="text-truncate">
+              {{ e.title }}
+            </div>
+          </v-card-title>
           <v-card-subtitle class="subtitle-body text-overflow">
             {{ e.content }}
           </v-card-subtitle>
           <v-card-actions class="d-flex justify-end">
-            <v-btn color="maincolor" text nuxt :to="`${e.category}/${e.postId}`">
+            <v-btn
+              color="maincolor"
+              text
+              nuxt
+              :to="`${e.category}/${e.postId}`"
+            >
               더보기
             </v-btn>
           </v-card-actions>
