@@ -2,7 +2,7 @@ module.exports = {
     apps: [
       {
         name: 'WallyDevNuxt',
-        cwd: '/home/ubuntu/wallydev',
+        cwd: '<폴더경로>/wallydev',
         exec_mode: 'cluster',
         instances: '1', // Or a number of instances
         script: './node_modules/nuxt/bin/nuxt.js',
