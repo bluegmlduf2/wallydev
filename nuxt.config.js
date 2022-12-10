@@ -85,7 +85,7 @@ export default {
       // 네이버 서치 콘솔
       {
         name: 'naver-site-verification',
-        content: 'cf1f52b6aaaab6696ba5951f7d138112d5c40c60',
+        content: '0aedc057c577ca3d446182dda3f909b581ea718d',
       },
     ],
     link: [
