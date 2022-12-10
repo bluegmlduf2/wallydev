@@ -41,7 +41,7 @@ class Post(Resource):
             raise UserError(701, '카테고리')
 
         # 등록되지 않은 카테고리를 등록할 경우
-        if payload['category'] not in ['today', 'food', 'javascript', 'vuejs','php']:
+        if payload['category'] not in ['today', 'food', 'javascript', 'vuejs','php','others']:
             raise UserError(704)
 
         if not payload['content']:
@@ -71,7 +71,7 @@ class Post(Resource):
             raise UserError(701, '카테고리')
 
         # 등록되지 않은 카테고리를 등록할 경우
-        if payload['category'] not in ['today', 'food', 'javascript', 'vuejs','php']:
+        if payload['category'] not in ['today', 'food', 'javascript', 'vuejs','php','others']:
             raise UserError(704)
 
         if not payload['content']:

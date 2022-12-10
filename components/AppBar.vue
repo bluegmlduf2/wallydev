@@ -125,6 +125,10 @@ export default {
               name: 'PHP',
               to: '/php',
             },
+            {
+              name: 'Others',
+              to: '/others',
+            },
           ],
         },
       ],
