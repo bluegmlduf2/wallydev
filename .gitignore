@@ -210,5 +210,8 @@ server/main/image/posttempimage/*.jpg
 log/logfile*
 log/logErrorfile*
 
+# pm2설정파일
+ecosystem.config.js
+
 # sqllite->mysql 덤프파일은 커밋 제외
 # server/main/*.sql
