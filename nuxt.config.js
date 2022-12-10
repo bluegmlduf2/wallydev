@@ -53,7 +53,7 @@ export default {
       {
         hid: 'og:url',
         name: 'og:url',
-        content: 'https://wallydev.herokuapp.com',
+        content: 'https://wallydev.com',
       },
       {
         hid: 'og:locale',
@@ -63,7 +63,7 @@ export default {
       {
         hid: 'og:image',
         name: 'og:image',
-        content: 'https://wallydev.herokuapp.com/android-chrome-512x512.png',
+        content: 'https://wallydev.com/android-chrome-512x512.png',
       },
       {
         hid: 'og:image:width',
@@ -80,7 +80,7 @@ export default {
       // 구글 서치 콘솔
       {
         name: 'google-site-verification',
-        content: 'FGrZoZwm8h80cANDMM6JfvCYfI5CtTBZK3Ko6aR6ZIs',
+        content: 'omPgIWqnBfqP7j0mgp3cWOcvTQodgpxCdUM8QvR87Wg',
       },
       // 네이버 서치 콘솔
       {
