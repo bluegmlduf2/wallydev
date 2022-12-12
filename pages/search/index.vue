@@ -11,9 +11,11 @@
       >
         <v-card max-width="344" class="hover-up">
           <v-img :src="e.displayImage" height="200px"></v-img>
-          <div class="text-truncate">
-            {{ e.title }}
-          </div>
+          <v-card-title>
+            <div class="text-truncate">
+              {{ e.title }}
+            </div>
+          </v-card-title>
           <v-card-subtitle class="subtitle-body text-overflow">
             {{ e.content }}
           </v-card-subtitle>

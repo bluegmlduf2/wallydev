@@ -9,11 +9,10 @@
         bold
       </button>
       <button
-        :disabled="!editor.can().chain().focus().toggleItalic().run()"
-        :class="{ 'is-active': editor.isActive('italic') }"
-        @click="editor.chain().focus().toggleItalic().run()"
+        :class="{ 'is-active': editor.isActive('underline') }"
+        @click="editor.chain().focus().toggleUnderline().run()"
       >
-        italic
+        underline
       </button>
       <button
         :disabled="!editor.can().chain().focus().toggleStrike().run()"
@@ -159,6 +158,7 @@
 import { Editor, EditorContent } from '@tiptap/vue-2'
 import { StarterKit } from '@tiptap/starter-kit'
 import { Image } from '@tiptap/extension-image'
+import { Underline } from '@tiptap/extension-underline'
 import message from '~/assets/js/message'
 
 export default {
@@ -175,7 +175,7 @@ export default {
       title: '',
       content: '',
       editor: null,
-      categoryItems: ['today', 'food', 'javascript', 'vuejs','php','others'],
+      categoryItems: ['today', 'food', 'javascript', 'vuejs', 'php', 'others'],
       selectedItem: 'today',
       tempImages: [],
     }
@@ -202,6 +202,7 @@ export default {
           inline: true, // p태그안에 img태그를 렌더링한다
           allowBase64: true,
         }),
+        Underline,
       ],
     })
   },
