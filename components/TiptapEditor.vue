@@ -22,9 +22,8 @@
         strike
       </button>
       <button
-        :disabled="!editor.can().chain().focus().toggleCode().run()"
-        :class="{ 'is-active': editor.isActive('code') }"
-        @click="editor.chain().focus().toggleCode().run()"
+        :class="{ 'is-active': editor.isActive('codeBlock') }"
+        @click="editor.chain().focus().toggleCodeBlock().run()"
       >
         code
       </button>
@@ -76,18 +75,6 @@
       >
         ordered list
       </button>
-      <button
-        :class="{ 'is-active': editor.isActive('codeBlock') }"
-        @click="editor.chain().focus().toggleCodeBlock().run()"
-      >
-        code block
-      </button>
-      <button
-        :class="{ 'is-active': editor.isActive('blockquote') }"
-        @click="editor.chain().focus().toggleBlockquote().run()"
-      >
-        blockquote
-      </button>
       <button @click="editor.chain().focus().setHorizontalRule().run()">
         horizontal rule
       </button>
@@ -137,7 +124,11 @@
         ></v-select>
       </v-col>
     </v-row>
-    <editor-content class="content" :editor="editor" spellcheck="false" />
+    <editor-content
+      class="content-editor"
+      :editor="editor"
+      spellcheck="false"
+    />
     <div class="d-flex mt-3">
       <v-btn class="text-subtitle-1" @click="$router.go(-1)">뒤로</v-btn>
       <v-spacer />
@@ -198,11 +189,11 @@ export default {
       content: this.content,
       extensions: [
         StarterKit,
+        Underline,
         Image.configure({
           inline: true, // p태그안에 img태그를 렌더링한다
           allowBase64: true,
         }),
-        Underline,
       ],
     })
   },
@@ -302,66 +293,12 @@ export default {
   border: 1px solid black !important;
   border-radius: 0.5rem;
 }
-
-.content {
+/* 수정화면 에디터 */
+.content-editor {
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 1rem;
   min-height: 500px;
   margin-top: 0.5rem;
-}
-
-ul,
-ol {
-  padding: 0 1rem;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  line-height: 1.1;
-}
-
-code {
-  background-color: rgba(#616161, 0.1);
-  color: #616161;
-}
-
-pre {
-  background: #0d0d0d;
-  color: #fff;
-  font-family: 'JetBrainsMono', monospace;
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-}
-
-pre code {
-  color: inherit;
-  padding: 0;
-  background: none;
-  font-size: 0.8rem;
-}
-
-blockquote {
-  padding-left: 1rem;
-  border-left: 2px solid rgba(#0d0d0d, 0.1);
-}
-
-hr {
-  border: none;
-  border-top: 2px solid rgba(#0d0d0d, 0.1);
-  margin: 2rem 0;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-}
-
-.is-active {
-  background: #e2e2e2;
 }
 </style>
