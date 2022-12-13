@@ -55,7 +55,7 @@ export default {
   p {
     line-height: 1.75rem;
   }
-  
+
   h1,
   h2,
   h3,
@@ -78,6 +78,13 @@ export default {
   img {
     max-width: 800px;
     height: auto;
+  }
+  // 스마트폰 화면에서 이미지를 가로 100%로 딱 맞게 사용
+  @media (max-width: 600px) {
+    img {
+      width: 100%;
+      height: auto;
+    }
   }
 }
 </style>
