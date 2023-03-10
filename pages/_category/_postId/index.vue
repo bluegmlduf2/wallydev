@@ -1,7 +1,7 @@
 <template>
   <v-container v-if="post" class="pa-0 pa-md-10 pa-lg-10">
     <v-row no-gutters>
-      <span class="text-h3 font-weight-bold">{{ post.title }}</span>
+      <span class="text-h3 font-weight-bold text-break">{{ post.title }}</span>
     </v-row>
     <v-row class="my-3 mx-1" align="center">
       <span class="text-subtitle-1 font-weight-light">{{
